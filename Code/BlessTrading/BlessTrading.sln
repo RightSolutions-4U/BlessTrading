@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlessTradingAPI", "BlessTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlessTrading.Common", "BlessTrading.Common\BlessTrading.Common.csproj", "{A1FB3B39-494D-41B2-948A-5C389F7807A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlessTrading.UI", "BlessTrading.UI\BlessTrading.UI.csproj", "{F85795F7-6760-4744-83C1-FA8CCE441F3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlessTrading.UI", "BlessTrading.UI\BlessTrading.UI.csproj", "{FF7FD736-FA2E-4A86-80AF-E7EACC95351C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A1FB3B39-494D-41B2-948A-5C389F7807A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1FB3B39-494D-41B2-948A-5C389F7807A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FB3B39-494D-41B2-948A-5C389F7807A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F85795F7-6760-4744-83C1-FA8CCE441F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F85795F7-6760-4744-83C1-FA8CCE441F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F85795F7-6760-4744-83C1-FA8CCE441F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F85795F7-6760-4744-83C1-FA8CCE441F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF7FD736-FA2E-4A86-80AF-E7EACC95351C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF7FD736-FA2E-4A86-80AF-E7EACC95351C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF7FD736-FA2E-4A86-80AF-E7EACC95351C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF7FD736-FA2E-4A86-80AF-E7EACC95351C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

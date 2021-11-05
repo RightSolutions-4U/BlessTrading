@@ -1,33 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {
-      "BlessTrading.Common/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "compile": {
-          "bin/placeholder/BlessTrading.Common.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BlessTrading.Common.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      }
-    }
+    "net5.0": {}
   },
-  "libraries": {
-    "BlessTrading.Common/1.0.0": {
-      "type": "project",
-      "path": "../BlessTrading.Common/BlessTrading.Common.csproj",
-      "msbuildProject": "../BlessTrading.Common/BlessTrading.Common.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": [
-      "BlessTrading.Common >= 1.0.0"
-    ]
+    "net5.0": []
   },
   "packageFolders": {
     "C:\\Users\\infod\\.nuget\\packages\\": {},
@@ -60,11 +38,7 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {
-            "D:\\WorkNew\\BlessTrading\\Code\\BlessTrading\\BlessTrading.Common\\BlessTrading.Common.csproj": {
-              "projectPath": "D:\\WorkNew\\BlessTrading\\Code\\BlessTrading\\BlessTrading.Common\\BlessTrading.Common.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
