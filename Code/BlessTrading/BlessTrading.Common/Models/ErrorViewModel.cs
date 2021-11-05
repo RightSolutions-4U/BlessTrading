@@ -1,6 +1,6 @@
 using System;
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     public class ErrorViewModel
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     public class Cart
     {

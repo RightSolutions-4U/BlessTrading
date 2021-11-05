@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     public partial class ProductPictureMapping
     {

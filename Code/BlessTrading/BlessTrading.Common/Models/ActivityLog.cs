@@ -1,10 +1,10 @@
-﻿using DesiClothing4u.Common.Models;
+﻿using BlessTrading.Common.Models;
 using System;
 using System.Collections.Generic;
 
 #nullable disable
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     public partial class ActivityLog
     {

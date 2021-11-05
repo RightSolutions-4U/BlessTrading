@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using DesiClothing4u.Common.Models;
+using BlessTrading.Common.Models;
 #nullable disable
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     //[Serializable]
     public partial class Customer

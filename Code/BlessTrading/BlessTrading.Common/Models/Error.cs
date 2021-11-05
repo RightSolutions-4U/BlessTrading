@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DesiClothing4u.Common.Models
+namespace BlessTrading.Common.Models
 {
     public class Error
         {
