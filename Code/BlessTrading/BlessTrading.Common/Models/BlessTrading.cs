@@ -28,6 +28,8 @@ namespace BlessTrading.Common.Models
         public virtual DbSet<AclRecord> AclRecords { get; set; }
         public virtual DbSet<ActivityLog> ActivityLogs { get; set; }
         public virtual DbSet<ActivityLogType> ActivityLogTypes { get; set; }
+        public virtual DbSet<AdminUsers> AdminUsers { get; set; }
+        public virtual DbSet<AdmminUserRoles> AdmminUserRoles { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AddressAttribute> AddressAttributes { get; set; }
         public virtual DbSet<AddressAttributeValue> AddressAttributeValues { get; set; }
@@ -115,6 +117,7 @@ namespace BlessTrading.Common.Models
         public virtual DbSet<ReturnRequestAction> ReturnRequestActions { get; set; }
         public virtual DbSet<ReturnRequestReason> ReturnRequestReasons { get; set; }
         public virtual DbSet<ReviewType> ReviewTypes { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<RewardPointsHistory> RewardPointsHistories { get; set; }
         public virtual DbSet<ScheduleTask> ScheduleTasks { get; set; }
         public virtual DbSet<SearchTerm> SearchTerms { get; set; }
@@ -244,6 +247,26 @@ namespace BlessTrading.Common.Models
                 //    .WithMany(p => p.Addresses)
                 //    .HasForeignKey(d => d.StateProvinceId)
                 //    .HasConstraintName("FK_Address_StateProvinceId_StateProvince_Id");
+            });
+
+            modelBuilder.Entity<AdminUsers>(entity =>
+            {
+                entity.ToTable("AdminUsers");
+
+                entity.HasIndex(e => e.RecId, "PK_AdminUsers");
+            });
+            modelBuilder.Entity<Roles>(entity =>
+            {
+                entity.ToTable("Roles");
+
+                entity.HasIndex(e => e.RoleId, "PK_Roles");
+            });
+
+            modelBuilder.Entity<AdmminUserRoles>(entity =>
+            {
+                entity.ToTable("AdmminUserRoles");
+
+                entity.HasIndex(e => e.VRoleId, "PK_VendorRoles");
             });
 
             modelBuilder.Entity<AddressAttribute>(entity =>

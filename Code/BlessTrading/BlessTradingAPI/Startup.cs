@@ -29,6 +29,13 @@ namespace BlessTradingAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<blesstradingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlessTradingDatabase")));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                );
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,12 +56,13 @@ namespace BlessTradingAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("CorsApi");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                .RequireCors("CorsApi"); 
             });
         }
     }

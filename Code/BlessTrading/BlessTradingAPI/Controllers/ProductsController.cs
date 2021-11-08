@@ -284,7 +284,7 @@ namespace BlessTrading.API.Controllers
                 var product = await _context.Products.OrderByDescending(a => a.MarkAsNew == true
                                 )
                                 .Include(a => a.ProductPictureMappings)
-                                .ThenInclude(f => f.Picture).Take(8)
+                                .ThenInclude(f => f.Picture).Take(4)
                                  .ToListAsync();
                 return product;
             }

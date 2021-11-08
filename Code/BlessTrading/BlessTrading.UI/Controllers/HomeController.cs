@@ -1,10 +1,13 @@
-﻿using BlessTrading.UI.Models;
+﻿using BlessTrading.Common.Models;
+using BlessTrading.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BlessTrading.UI.Controllers
@@ -18,12 +21,54 @@ namespace BlessTrading.UI.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
-        }
+            try
+            {
+                Load load = new Load();
+                var clientF = new HttpClient();
+                var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
 
-        public IActionResult Privacy()
+                var responseF = await clientF.GetAsync(urlF);
+                var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
+                load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
+
+                var clientN = new HttpClient();
+                var urlN = "https://localhost:44340/api/Products/GetNewProducts";
+                var responseN = await clientN.GetAsync(urlN);
+                var NewProduct = responseN.Content.ReadAsStringAsync().Result;
+                load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
+ /*               if (Request.Cookies["userid"] != null)
+                {
+                    var clientC = new HttpClient();
+                    *//*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*//*
+                    UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");
+                    builderC.Query = "UserId=" + Request.Cookies["userid"];
+                    HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
+                    if (responseC.IsSuccessStatusCode)
+                    {
+                        var Users = responseC.Content.ReadAsStringAsync().Result;
+                        load.Customer = JsonConvert.DeserializeObject<Customer>(Users);
+                        ViewBag.UserName = load.Customer.Username;
+
+                    }
+                }
+*/                ViewBag.Vendormessage = TempData["Vendormessage"];
+                    return View("Index", load);
+            }
+            catch (Exception e)
+            {
+                Error err = new Error();
+                err.ErrorMessage = "Sorry couldn't autoload";
+                ViewBag.Error = err;
+                return View("Error", err);
+            }
+        }
+/*        public IActionResult Contact()
+        {
+            return View("Contact");
+        }
+*/        public IActionResult Privacy()
         {
             return View();
         }
@@ -31,7 +76,7 @@ namespace BlessTrading.UI.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new Common.Models.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
