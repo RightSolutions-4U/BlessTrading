@@ -20,6 +20,7 @@ namespace BlessTrading.Common.Models
         public string TitleAttribute { get; set; }
         public bool IsNew { get; set; }
         public string VirtualPath { get; set; }
+        public int ProductId { get; set; }
 
         public string FileName
         {
@@ -29,7 +30,7 @@ namespace BlessTrading.Common.Models
             }
         }
         //commented by SM on Nov 13, 2020 to stop cycling
-        public int ProductId { get; set; }
+        
         //commented by SM on Nov 13, 2020 to stop cycling
         //public virtual ICollection<PictureBinary> PictureBinaries { get; set; }
         //public virtual ICollection<ProductPictureMapping> ProductPictureMappings { get; set; }

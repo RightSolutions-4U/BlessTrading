@@ -11,8 +11,11 @@ namespace BlessTrading.Common.Models
         
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ShortDescription { get; set; }
+        public string FullDescription { get; set; }
         public decimal Price { get; set; }
         public int Discount { get; set; }
+        public int CatId { get; set; }
         public string SeoFilename { get; set; }
 
         public string VirtualPath { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -63,6 +62,7 @@ namespace BlessTrading.API.Controllers
         [Obsolete]
         public async Task<ActionResult<Picture>> PostPicture(List<IFormFile> file, IFormCollection Id)
         {
+            
             string projectRootPath = _hostingEnvironment.WebRootPath;
             string projectRootPath1 = _hostingEnvironment.ContentRootPath;
             Console.Write(projectRootPath);
@@ -70,15 +70,15 @@ namespace BlessTrading.API.Controllers
             /*string projectRootPath = _hostingEnvironment.ContentRootPath;*/
 
             /*projectRootPath = projectRootPath.Replace("DesiClothing4u.API", "DesiClothing4u.UI");*/
-            projectRootPath = projectRootPath.Replace("testapi.desiclothingonline.com", "test.desiclothingonline.com");
+            projectRootPath = projectRootPath1.Replace("BlessTradingAPI", "BlessTrading.UI");
             
            //if (string.IsNullOrWhiteSpace(projectRootPath))
            // {
            //     projectRootPath = Directory.GetCurrentDirectory();
            // }
             /*string path = "/wwwroot/ProductImages/";*/
-            string path = "/ProductImages/";
-            string path_virtual= "~/ProductImages/";
+            string path = "/wwwroot/ProductImages/";
+            string path_virtual= "/ProductImages/";
             var id = Id["Id"];
             //if (!Directory.Exists(projectRootPath+ path))
             //{
@@ -93,10 +93,16 @@ namespace BlessTrading.API.Controllers
                 var fileName = Path.GetFileName(postedFile.FileName) + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
 
                 //Saving file to Folder
-                using (FileStream stream = new FileStream(Path.Combine(projectRootPath + path, fileName), FileMode.Create))
+                try
                 {
-                    postedFile.CopyTo(stream);
-                    uploadedFiles.Add(fileName);
+
+                    using (FileStream stream = new FileStream(Path.Combine(projectRootPath + path, fileName), FileMode.Create))
+                    {
+                        postedFile.CopyTo(stream);
+                        uploadedFiles.Add(fileName);
+                    }
+                }
+                catch (Exception e) { 
                 }
                 var ProdId = Convert.ToInt32(id.ToString());
                 //Saving data to database
@@ -197,7 +203,16 @@ namespace BlessTrading.API.Controllers
             _context.Pictures.Remove(picture);
             await _context.SaveChangesAsync();
 
-            return picture;
+/*            //Delete reference from product picture mapping
+            var Map = await _context.ProductPictureMappings.Where(a => a.Id == Id);
+            if (Map == null)
+            {
+                return NotFound();
+            }
+
+            _context.ProductPictureMappings.Remove(Map);
+            await _context.SaveChangesAsync();
+*/            return picture;
         }
     }
 }

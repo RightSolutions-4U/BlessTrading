@@ -45,7 +45,23 @@ namespace BlessTrading.API.Controllers
 
             return product;
         }
-        
+
+        // GET: api/Products/5
+        [HttpGet("GetProductWithCat")]
+        public async Task<ActionResult<Product>> GetProductWithCat(int id)
+        {
+            //var sproduct = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(id.ToString());
+            var product = await _context.Products.Include(i => i.ProductCategoryMappings)
+                                .FirstOrDefaultAsync(i => i.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return product;
+        }
+
         [HttpGet("GetCategories")]
         public IEnumerable<ProductCategory> GetCategories()
         {
@@ -127,6 +143,8 @@ namespace BlessTrading.API.Controllers
         [HttpPost("PostProduct")]
         public async Task<ActionResult<Product>> PostProduct([FromBody] dynamic myproduct)
         {
+            try
+            { 
             var sProduct = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(myproduct.ToString());
             int catId = sProduct.Categoryid;
             Product product = new Product
@@ -141,7 +159,7 @@ namespace BlessTrading.API.Controllers
                 ParentGroupedProductId = 1,
                 VisibleIndividually = true,
                 ProductTemplateId = 1,
-                VendorId = sProduct.VendorId,
+                VendorId = 1007,
                 ShowOnHomepage = true,
                 AllowCustomerReviews = true,
                 ApprovedRatingSum = 1,
@@ -220,7 +238,13 @@ namespace BlessTrading.API.Controllers
                 UpdatedOnUtc = DateTime.UtcNow,
                 IsActive = true,
             };
-            return await PostProductJson (product, catId);
+            return await PostProductJson(product, catId);
+            }
+            catch (Exception e)
+            {
+                Product p = new Product();
+                return await PostProductJson(p  , 21);
+            }
         }
         private async Task<ActionResult<Product>> PostProductJson(Product product, int Categoryid)
         {
@@ -233,8 +257,19 @@ namespace BlessTrading.API.Controllers
                 ProductId = product.Id
             };
             _context.ProductCategoryMappings.Add(productMapping);
+            Picture picture = new Picture
+            {
+                MimeType = "MME",
+                SeoFilename = "noimage.jpeg",
+                IsNew = true,
+                VirtualPath = "/productimages/",
+                ProductId = product.Id
+            };
+            _context.Pictures.Add(picture);
             await _context.SaveChangesAsync();
+            
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            
             //return NoContent();
         }
 
@@ -303,10 +338,10 @@ namespace BlessTrading.API.Controllers
                            )
                            .Include(a => a.ProductPictureMappings)
                            .ThenInclude(f => f.Picture).Take(8)
-                            .ToListAsync();
+                           
+                           .ToListAsync();
             return product;
         }
-
 
         [HttpGet("GetProductsByCat")]
         public IEnumerable<productExt> GetProductsByCat(int CatId)
@@ -328,5 +363,24 @@ namespace BlessTrading.API.Controllers
             }
         }
 
+        [HttpGet("GetCategoryByProduct")]
+        public IEnumerable<productExt> GetCategoryByProduct(int Id)
+        {
+            /*Added by Mohtashim on Dec 21, 2020*/
+            try
+            {
+                int ProductId = Id;
+                var productExt = _context.productExts
+                .FromSqlRaw("Execute dbo.GetCategoryIdByProduct {0}", ProductId)
+                .ToList();
+
+                return productExt;
+            }
+            catch (Exception e)
+            {
+                /*if the vendor dont have any product*/
+                return null;
+            }
+        }
     }
 }
