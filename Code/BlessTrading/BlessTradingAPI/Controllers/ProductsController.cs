@@ -257,15 +257,15 @@ namespace BlessTrading.API.Controllers
                 ProductId = product.Id
             };
             _context.ProductCategoryMappings.Add(productMapping);
-            Picture picture = new Picture
-            {
-                MimeType = "MME",
-                SeoFilename = "noimage.jpeg",
-                IsNew = true,
-                VirtualPath = "/productimages/",
-                ProductId = product.Id
-            };
-            _context.Pictures.Add(picture);
+            //Picture picture = new Picture
+            //{
+            //    MimeType = "MME",
+            //    SeoFilename = "noimage.jpeg",
+            //    IsNew = true,
+            //    VirtualPath = "/productimages/",
+            //    ProductId = product.Id
+            //};
+            //_context.Pictures.Add(picture);
             await _context.SaveChangesAsync();
             
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
@@ -320,7 +320,7 @@ namespace BlessTrading.API.Controllers
                                 )
                                 .Include(a => a.ProductPictureMappings)
                                 .ThenInclude(f => f.Picture).Take(4)
-                                 .ToListAsync();
+                                .ToListAsync();
                 return product;
             }
             catch(Exception e)

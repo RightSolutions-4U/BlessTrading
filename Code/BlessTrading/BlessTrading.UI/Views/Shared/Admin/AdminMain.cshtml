@@ -162,6 +162,10 @@
                 data: { CatId: catid },
                 success: function (result) {
 
+                    var tbl = document.getElementById("tblproduct");
+                    for (var i = 1, row; row = tbl.rows[i]; i++) {
+                        tbl.deleteRow(i);
+                    }
                     var tableProd = $('#tblproduct tbody');
 
                     $.each(result, function (i, item) {
@@ -170,6 +174,12 @@
                 },
                 error:
                     function (result) {
+                        var tbl = document.getElementById("tblproduct");
+                        for (var i = 0, row; row = tbl.rows[i]; i++) {
+                            tbl.deleteRow(0);
+                        }
+                        var tableProd = $('#tblproduct tbody');
+
                         var tableProd = $('#tblproduct tbody');
                         tableProd.append('<tr><td align="center" colspan="6" >No product available</td></tr>');
                         alert("error : " + result.responseText);
@@ -235,7 +245,7 @@
                                                 <h4>Add Products</h4>
                                             </td>
                                             <td width="50%" align="right">
-                                                <button type="button" class="btn btn-primary" onclick="hideme('defaultdiv');">Cancel</button>
+                                                <button type="button" class="btn btn-primary" onclick="hideme('defaultdiv'); location.reload();">Cancel</button>
                                                 <button type="button" class="btn btn-primary submit mb-4" onclick="PostProduct()">Save</button>
                                             </td>
                                         </tr>
@@ -557,7 +567,6 @@
                                         }
                                         function delpicE(PicId) {
                                             var pid = PicId;
-                                            alert(PicId);
                                             var myproduct = {
                                                 id: pid
                                             }
@@ -570,21 +579,23 @@
                                                 data: JSON.stringify(myproduct),
                                                 success: function (result) {
                                                     var productid = $('#ProductIdE').val();
-                                                    alert("productid after deletion" + productid);
+                                                    alert('Product picture deleted');
                                                     $.ajax({
                                                         url: 'https://localhost:44340/api/Pictures/GetProductPicture',
                                                         type: 'GET',
                                                         data: { id: productid },
                                                         success: function (data) {
-                                                            alert("GetProductPics before");
                                                             var trHTML = '';
                                                             var path = window.location.origin;
+                                                            var tbl = document.getElementById("tblpicE");
+                                                            for (var i = 0, row; row = tbl.rows[i]; i++) {
+                                                                tbl.deleteRow(0);
+                                                            }
                                                             var tablePicE = $('#tblpicE tbody');
+                                                            
                                                             $.each(data, function (i, item) {
-                                                                alert(item.seoFilename);
                                                                 tablePicE.append('<tr><td align="center">' + item.id + '</td><td align="center"><img src=' + path + '/ProductImages/' + item.seoFilename + ' height = "75" width = "75" ></td><td align="center">' + item.productId + '</td><td align="center"><a href="#" onClick=delpicE(' + item.id + ' )><img src=' + path + '/Images/delicon.png height = "25" width = "25" ></a></td></tr>');
                                                             });
-                                                            alert("GetProductPics after");
 
                                                         }
                                                         , error: function (result) {
