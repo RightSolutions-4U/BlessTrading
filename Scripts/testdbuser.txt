@@ -1,0 +1,26 @@
+
+You can login to our billing system at https://portal.hostgator.com/login, using the email address we sent this email to, and the password included in your Welcome email.
+
+    Shared Plan:        Windows Personal
+    Your Control Panel: https://hgws10.win.hostgator.com:8443
+    Username:           blessing
+    Domain:             blesstrading.net
+    Password:           tIyICVK1to7O3z5t
+    1st Nameserver:     ns19.win.hostgator.com
+    2nd Nameserver:     ns20.win.hostgator.com
+    Server IP:          192.185.6.99
+
+
+
+blessing_testAPI
+bless_test
+Mohtashim098@
+127.0.0.1
+
+
+36664393
+
+36676390
+
+
+data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|aspnetdb.mdf;User Instance=true

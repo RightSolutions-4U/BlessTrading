@@ -30,8 +30,11 @@ namespace BlessTradingAPI
         {
             services.AddDbContext<blesstradingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlessTradingDatabase")));
             services.AddCors(options =>
-            {
-                options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")
+            {   
+                //for development
+                /*options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")*/
+                //for Live
+                options.AddPolicy("CorsApi", builder => builder.WithOrigins("http://test.blesstrading.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 );
@@ -49,9 +52,9 @@ namespace BlessTradingAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlessTradingAPI v1"));
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlessTradingAPI v1"));
 
             app.UseHttpsRedirection();
 

@@ -152,7 +152,9 @@
             </div>
         </div>
     </nav>
+    
     <script>
+
         function getproducts() {
             var catid = $("#lstCategory").val();
             var path = window.location.origin;
@@ -191,7 +193,7 @@
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <p class="font-weight-bold"><a href="#">Categories</a></p>
-                <p class="font-weight-bold"><a href="#" onclick ="PopCategories();">Products</a></p>
+                <p class="font-weight-bold"><a href="#" onclick="PopCategories();">Products</a></p>
                 <p class="font-weight-bold"><a href="#">Order Management</a></p>
             </div>
 
@@ -211,7 +213,7 @@
                             <thead>
                                 <tr valign="middle">
                                     <td>
-                                        <h4 >Products</h4>
+                                        <h4>Products</h4>
                                     </td>
                                     <td align="right" colspan="5">
                                         <button type="submit" class="btn btn-primary submit mb-4" onclick="hideme('addproduct'); populateCategory();">Add New</button>
@@ -221,19 +223,20 @@
                                     <td class="font-weight-bold" align="center">Product Name</td>
                                     <td class="font-weight-bold" align="center">Price</td>
                                     <td class="font-weight-bold" align="center">Dicsount</td>
-                                    <td class="font-weight-bold" colspan="3" >Image</td>
+                                    <td class="font-weight-bold" colspan="3">Image</td>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
-@*                            <tfoot>
-                                <tr>
-                                    <th>
-                                        Customers
-                                    </th>
-                                </tr>
-                            </tfoot>
-*@                        </table>
+                            @*                            <tfoot>
+                                    <tr>
+                                        <th>
+                                            Customers
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            *@
+                        </table>
                     </div>
                     <div class="col-sm-10 text-left">
                         <div id="addproduct" style="display:none">
@@ -303,17 +306,18 @@
                                                 <input class="form-control" type="text" align="right" name="Discount" id="Discount" placeholder="" required="" style="width:500px;">
                                             </div>
                                             <div class="form-group" style="text-align:left">
-@*                                                <table>
+                                                @*                                                <table>
                                                     <tr>
                                                         <td><label class="my-2">Active</label></td>
                                                         <td><input type="checkbox" align="right" name="IsActive" id="IsActive" placeholder="" required="" style="width:500px;" checked></td>
                                                     </tr>
-*@                                                    <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
-                                                        <label class="form-check-label" for="exampleCheck1">Active</label>
-                                                    </div>
-@*                                                </table>
-*@                                            </div>
+                                                *@                                                    <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
+                                                    <label class="form-check-label" for="exampleCheck1">Active</label>
+                                                </div>
+                                                @*                                                </table>
+                                                *@
+                                            </div>
                                             <div class="form-group" style="text-align:left">
                                                 <input class="form-control" type="hidden" name="ProductId" id="ProductId" placeholder="" required="" style="width:500px;">
                                             </div>
@@ -353,11 +357,11 @@
                                               , success: function (result) {
 
                                                   alert("New Product has been added");
-                                                  alert(result.id);
+                                                  
                                                   $('#ProductId').val(result.id);
                                                   var x = document.getElementById('PicUpload');
                                                   x.style.display = "Block";
-                                                  
+
 
                                            }
                                             , error: function (result) {
@@ -369,7 +373,7 @@
                                 </form>
                             </div>
                             <div class="col-sm-10">
-                                <div id="PicUpload"  class="border border-warning" style="width:90%;align-self:center;align-content:center;display:none">
+                                <div id="PicUpload" class="border border-warning" style="width:90%;align-self:center;align-content:center;display:none">
                                     <form id="frmPic" method="post" enctype="multipart/form-data">
                                         <span>Select File:</span>
                                         <input type="file" name="myfiles" id="myfiles" multiple />
@@ -419,7 +423,7 @@
                                                 <tbody></tbody>
                                             </table>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>
@@ -434,7 +438,46 @@
                                             </td>
                                             <td width="50%" align="right">
                                                 <button type="button" class="btn btn-primary submit mb-4" onclick="hideme('defaultdiv');">Cancel</button>
-                                                <button type="button" class="btn btn-primary submit mb-4" onclick="EditProduct()">Save</button>
+                                                <button type="button" class="btn btn-primary submit mb-4" onclick="editproduct1();">Save</button>
+                                                <script>
+                                                    function editproduct1() {
+                                                        
+                                                        var ProductName = $('#ProductNameE').val();
+                                                        var ShortDescription = $('#ShortDescriptionE').val();
+                                                        var FullDescription = $('#FullDescriptionE').val();
+                                                        var Price = parseInt($('#PriceE').val());
+                                                        var Discount = parseInt($('#DiscountE').val());
+                                                        var VendorId    = parseInt('1007');
+                                                        var ProductId = parseInt($('#ProductIdE').val());
+                                                        var IsActive = $("#IsActiveE").is(":checked");
+                                                        
+                                                        var myproduct = {
+                                                            Name: ProductName,
+                                                            ShortDescription: ShortDescription,
+                                                            FullDescription: FullDescription,
+                                                            Price: Price,
+                                                            Discount: Discount,
+                                                            VendorId: VendorId,
+                                                            Id: ProductId,
+                                                            IsActive:IsActive
+                                                        }
+                                                        $.ajax({
+                                                            url: 'https://localhost:44340/api/Products/PutProduct1',
+                                                            type: 'POST',
+                                                            dataType: 'json',
+                                                            contentType: 'application/json; charset=utf-8',
+                                                            data: JSON.stringify(myproduct)
+                                                            , success: function (result) {
+                                                                alert(" Product has been edited ");
+                                                                $('#ProductIdE').val(result.id);
+                                                                location.reload();
+                                                            }
+                                                            , error: function (result) {
+                                                                alert("err " + result.responseText);
+                                                            }
+                                                        })
+                                                    }
+                                                </script>
                                             </td>
                                         </tr>
                                     </table>
@@ -467,7 +510,7 @@
                                             <div class="form-group" style="text-align:left">
                                                 <label class="my-2">Price</label>
                                                 <input class="form-control" type="text" align="right" name="PriceE" id="PriceE" placeholder="" required="" style="width:500px;">
-                                                <input type="text" name="CatE" id="CatE">
+                                                <input type="hidden" name="CatE" id="CatE">
                                             </div>
                                             <div class="form-group" style="text-align:left">
                                                 <label class="my-2">Discount</label>
@@ -485,6 +528,7 @@
                                             </div>
                                         </div>
                                         <script>
+
                                             function EditProduct() {
                                                         var ProductName = $('#ProductNameE').val();
                                                         var ShortDescription = $('#ShortDescriptionE').val();
@@ -494,6 +538,7 @@
                                                         var VendorId = parseInt('@ViewBag.VendorId');
                                                         var ProductId = parseInt($('#ProductIdE').val());
                                                         var IsActive = parseInt($('#IsActiveE').val());
+                                                        
                                                         var myproduct = {
                                                             Name: ProductName,
                                                             ShortDescription: ShortDescription,
@@ -504,27 +549,27 @@
                                                             Id: ProductId,
                                                             IsActive=IsActive
                                                         }
-                                                            $.ajax({
-                                                                url: 'https://localhost:44340/api/Products/PutProduct1',
-                                                                type: 'POST',
-                                                                dataType: 'json',
-                                                                contentType: 'application/json; charset=utf-8',
-                                                                data: JSON.stringify(myproduct)
-                                                                , success: function (result) {
-                                                                    alert(" Product has been edited ");
-                                                                    $('#ProductId').val(result.id);
-                                                                    location.reload();
-                                                            }
-                                                            , error: function (result) {
-                                                                alert("err " + result.responseText);
-                                                            }
-                                                        })
+                                                $.ajax({
+                                                    url: 'https://localhost:44340/api/Products/PutProduct1',
+                                                    type: 'POST',
+                                                    dataType: 'json',
+                                                    contentType: 'application/json; charset=utf-8',
+                                                    data: JSON.stringify(myproduct)
+                                                    , success: function (result) {
+                                                        alert(" Product has been edited ");
+                                                        $('#ProductId').val(result.id);
+                                                        location.reload();
+                                                    }
+                                                    , error: function (result) {
+                                                        alert("err " + result.responseText);
+                                                    }
+                                                })
                                                     }
                                         </script>
                                     </div>
                                 </form>
-                                
-                                
+
+
                             </div>
                             <div class="col-sm-10">
                                 <div id="PicUploadE" class="border border-warning" style="width:80%;align-self:center;align-content:center">
@@ -541,7 +586,7 @@
                                             var input = $('#myfilesE').get(0).files;
                                             var formData = new FormData();
                                             var ProductId = $('#ProductIdE').val();// for pic prod mapping
-                                            alert(ProductId);
+                                            
                                             for (var i = 0; i <= input.length; i++) {
                                                 formData.append("file", input[i]);
                                             }
@@ -592,7 +637,7 @@
                                                                 tbl.deleteRow(0);
                                                             }
                                                             var tablePicE = $('#tblpicE tbody');
-                                                            
+
                                                             $.each(data, function (i, item) {
                                                                 tablePicE.append('<tr><td align="center">' + item.id + '</td><td align="center"><img src=' + path + '/ProductImages/' + item.seoFilename + ' height = "75" width = "75" ></td><td align="center">' + item.productId + '</td><td align="center"><a href="#" onClick=delpicE(' + item.id + ' )><img src=' + path + '/Images/delicon.png height = "25" width = "25" ></a></td></tr>');
                                                             });
@@ -630,6 +675,8 @@
                                                                 $('#ShortDescriptionE').val(result.shortDescription);
                                                                 $('#FullDescriptionE').val(result.fullDescription);
                                                                 $('#PriceE').val(result.price);
+                                                                $('#DiscountE').val(result.discount);
+                                                                
                                                                 if (result.isActive == true) {
                                                                     $('#IsActiveE').attr('checked', true);
                                                                 }
@@ -697,7 +744,7 @@
                                                             type: 'POST',
                                                             contentType: 'application/json; charset=utf-8',
                                                             data: JSON.stringify(myproduct),
-                                                           
+
                                                             success: function (result) {
                                                                 alert("Product deleted successfully");
                                                                 location.reload();
@@ -748,7 +795,7 @@
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
             @*<div class="col-sm-2 sidenav">
                     <div class="well">
                         <p>&nbsp;</p>

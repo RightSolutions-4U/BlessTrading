@@ -190,3 +190,5 @@ D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\Bless
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\ref\BlessTradingAPI.dll
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\BlessTradingAPI.pdb
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\BlessTradingAPI.genruntimeconfig.cache
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Debug\net5.0\BlessTradingAPI.Views.dll
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\BlessTradingAPI.csproj.CopyComplete

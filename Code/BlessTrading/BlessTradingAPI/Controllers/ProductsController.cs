@@ -28,7 +28,9 @@ namespace BlessTrading.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            /*return await _context.Products.ToListAsync();*/
+            return await _context.Products.Where(a => a.Deleted == false && a.IsActive==true)
+                .ToListAsync();
         }
 
         // GET: api/Products/5
@@ -234,7 +236,7 @@ namespace BlessTrading.API.Controllers
                 Height = 1,
                 DisplayOrder = 1,
                 Published = true,
-                Deleted = true,
+                Deleted = false,
                 UpdatedOnUtc = DateTime.UtcNow,
                 IsActive = true,
             };
@@ -299,8 +301,9 @@ namespace BlessTrading.API.Controllers
             {
                 return NotFound();
             }
-
-            _context.Products.Remove(product);
+            product.Deleted = true;
+            /*_context.Products.Remove(product);*/
+            _context.Products.Update(product);
             await _context.SaveChangesAsync();
 
             return product;
@@ -318,6 +321,7 @@ namespace BlessTrading.API.Controllers
             {
                 var product = await _context.Products.OrderByDescending(a => a.MarkAsNew == true
                                 )
+                                .Where(a => a.Deleted == false && a.IsActive == true)
                                 .Include(a => a.ProductPictureMappings)
                                 .ThenInclude(f => f.Picture).Take(4)
                                 .ToListAsync();
@@ -334,8 +338,9 @@ namespace BlessTrading.API.Controllers
         {
       
             
-            var product = await _context.Products.OrderByDescending(a => a.CreatedOnUtc
+            var product = await _context.Products.OrderByDescending(a => a.CreatedOnUtc 
                            )
+                            .Where(a => a.Deleted == false && a.IsActive==true)
                            .Include(a => a.ProductPictureMappings)
                            .ThenInclude(f => f.Picture).Take(8)
                            
