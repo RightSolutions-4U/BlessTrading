@@ -20,8 +20,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         function PopCategories() {
+            var URL = '@ViewBag.env' + '/api/Products/GetCategories';
             $.ajax({
-                url: 'https://localhost:44340/api/Products/GetCategories',
+                url: URL,
                 type: 'GET',
                 success: function (result) {
                     var markup = "<option value='x'>Select Category</option>";
@@ -31,10 +32,10 @@
                     }
                     $("#lstCategory").html(markup).show();
                 },
-                error:
-                    function (result) {
-                        alert("error : " + result.responseText);
-                    }
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
             });
         }
 
@@ -158,8 +159,10 @@
         function getproducts() {
             var catid = $("#lstCategory").val();
             var path = window.location.origin;
+            var URL = '@ViewBag.env' + '/api/Products/GetProductsByCat?';
+
             $.ajax({
-                url: 'https://localhost:44340/api/Products/GetProductsByCat?',
+                url: URL,
                 type: 'GET',
                 data: { CatId: catid },
                 success: function (result) {
@@ -276,9 +279,9 @@
                                                 </select>
                                                 <script>
                                                     function populateCategory() {
+                                                        var URL = '@ViewBag.env' + '/api/Products/GetCategories'
                                                         $.ajax({
-                                                            url: 'https://localhost:44340/api/Products/GetCategories',
-                                                            @*url: 'https://localhost:44340/api/Products/GetCategories',*@
+                                                            url: URL ,
                                                             type: 'GET',
 
                                                             success: function (result) {
@@ -348,8 +351,9 @@
                                             IsActive: IsActive
                                         }
                                         @*myproduct.append("Categoryid", CategoryId);*@
-                                          $.ajax({
-                                              url: 'https://localhost:44340/api/Products/PostProduct',
+                                        var URL = '@ViewBag.env' + '/api/Products/PostProduct'
+                                        $.ajax({
+                                              url: URL,
                                              type: 'POST',
                                              dataType: 'json',
                                              contentType: 'application/json; charset=utf-8',
@@ -357,7 +361,7 @@
                                               , success: function (result) {
 
                                                   alert("New Product has been added");
-                                                  
+
                                                   $('#ProductId').val(result.id);
                                                   var x = document.getElementById('PicUpload');
                                                   x.style.display = "Block";
@@ -389,10 +393,9 @@
                                                 formData.append("file", input[i]);
                                             }
                                             formData.append("Id", ProductId);
-
+                                            var URL = '@ViewBag.env' + '/api/Pictures/PostPicture'
                                             $.ajax({
-                                                url: 'https://localhost:44340/api/Pictures/PostPicture',
-                                                @*url: 'https://localhost:44340/api/Pictures/PostPicture',*@
+                                                url: URL,
                                                 type: 'POST',
                                                 dataType: 'json',
                                                 data: formData,
@@ -441,7 +444,7 @@
                                                 <button type="button" class="btn btn-primary submit mb-4" onclick="editproduct1();">Save</button>
                                                 <script>
                                                     function editproduct1() {
-                                                        
+
                                                         var ProductName = $('#ProductNameE').val();
                                                         var ShortDescription = $('#ShortDescriptionE').val();
                                                         var FullDescription = $('#FullDescriptionE').val();
@@ -450,7 +453,7 @@
                                                         var VendorId    = parseInt('1007');
                                                         var ProductId = parseInt($('#ProductIdE').val());
                                                         var IsActive = $("#IsActiveE").is(":checked");
-                                                        
+
                                                         var myproduct = {
                                                             Name: ProductName,
                                                             ShortDescription: ShortDescription,
@@ -461,8 +464,9 @@
                                                             Id: ProductId,
                                                             IsActive:IsActive
                                                         }
+                                                        var URL = '@ViewBag.env' + '/api/Products/PutProduct1'
                                                         $.ajax({
-                                                            url: 'https://localhost:44340/api/Products/PutProduct1',
+                                                            url: URL ,
                                                             type: 'POST',
                                                             dataType: 'json',
                                                             contentType: 'application/json; charset=utf-8',
@@ -538,7 +542,7 @@
                                                         var VendorId = parseInt('@ViewBag.VendorId');
                                                         var ProductId = parseInt($('#ProductIdE').val());
                                                         var IsActive = parseInt($('#IsActiveE').val());
-                                                        
+
                                                         var myproduct = {
                                                             Name: ProductName,
                                                             ShortDescription: ShortDescription,
@@ -548,9 +552,10 @@
                                                             VendorId: VendorId,
                                                             Id: ProductId,
                                                             IsActive=IsActive
-                                                        }
+                                                }
+                                                var URL = '@ViewBag.env' + '/api/Products/PutProduct1'
                                                 $.ajax({
-                                                    url: 'https://localhost:44340/api/Products/PutProduct1',
+                                                    url: URL,
                                                     type: 'POST',
                                                     dataType: 'json',
                                                     contentType: 'application/json; charset=utf-8',
@@ -586,13 +591,14 @@
                                             var input = $('#myfilesE').get(0).files;
                                             var formData = new FormData();
                                             var ProductId = $('#ProductIdE').val();// for pic prod mapping
-                                            
+
                                             for (var i = 0; i <= input.length; i++) {
                                                 formData.append("file", input[i]);
                                             }
                                             formData.append("Id", ProductId);
+                                            var URL = '@ViewBag.env' + '/api/Pictures/PostPicture'
                                             $.ajax({
-                                                url: 'https://localhost:44340/api/Pictures/PostPicture',
+                                                url: URL,
                                                 type: 'POST',
                                                 dataType: 'json',
                                                 data: formData,
@@ -615,8 +621,9 @@
                                             var myproduct = {
                                                 id: pid
                                             }
+                                            var URL = '@ViewBag.env' + '/api/Pictures/DeletePicture1'
                                             $.ajax({
-                                                url: 'https://localhost:44340/api/Pictures/DeletePicture1',
+                                                url: URL,
                                                 type: 'POST',
                                                 dataType: 'json',
                                                 contentType: 'application/json; charset=utf-8',
@@ -625,8 +632,9 @@
                                                 success: function (result) {
                                                     var productid = $('#ProductIdE').val();
                                                     alert('Product picture deleted');
+                                                    URL = '@ViewBag.env' + '/api/Pictures/GetProductPicture'
                                                     $.ajax({
-                                                        url: 'https://localhost:44340/api/Pictures/GetProductPicture',
+                                                        url: URL,
                                                         type: 'GET',
                                                         data: { id: productid },
                                                         success: function (data) {
@@ -657,9 +665,10 @@
                                         }
                                         function GetProduct(productid) {
                                             var i = 0;
-                                            var CatId=0;
+                                            var CatId = 0;
+                                            var URL = '@ViewBag.env' + '/api/Products/GetProductWithCat'
                                                         $.ajax({
-                                                            url: 'https://localhost:44340/api/Products/GetProductWithCat',
+                                                            url: URL,
                                                             type: 'GET',
                                                             data: { Id: productid },
                                                             success: function (result) {
@@ -676,15 +685,16 @@
                                                                 $('#FullDescriptionE').val(result.fullDescription);
                                                                 $('#PriceE').val(result.price);
                                                                 $('#DiscountE').val(result.discount);
-                                                                
+
                                                                 if (result.isActive == true) {
                                                                     $('#IsActiveE').attr('checked', true);
                                                                 }
                                                                 else {
                                                                     $('#IsActiveE').attr('checked', false);
                                                                 }
+                                                                URL = '@ViewBag.env' + '/api/Pictures/GetProductPicture'
                                                                 $.ajax({
-                                                                    url: 'https://localhost:44340/api/Pictures/GetProductPicture',
+                                                                    url: URL,
                                                                     type: 'GET',
                                                                     data: { id: productid },
                                                                     success: function (data) {
@@ -703,8 +713,9 @@
                                                                         alert("err " + result.responseText);
                                                                     }
                                                                 })
+                                                                var URL = '@ViewBag.env' + '/api/Products/GetCategories'
                                                                 $.ajax({
-                                                                    url: 'https://localhost:44340/api/Products/GetCategories',
+                                                                    url: URL,
                                                                     type: 'GET',
 
                                                                     success: function (result) {
@@ -738,9 +749,10 @@
                                                         var Id = productid;
                                                         var myproduct = {
                                                             id: Id
-                                                        }
+                                            }
+                                            var URL = '@ViewBag.env' + '/api/Products/DeleteProduct1/'
                                                         $.ajax({
-                                                            url: 'https://localhost:44340/api/Products/DeleteProduct1/',
+                                                            url: URL,
                                                             type: 'POST',
                                                             contentType: 'application/json; charset=utf-8',
                                                             data: JSON.stringify(myproduct),
@@ -756,8 +768,9 @@
                                                     })
                                                 }
                                         function delpic(PicId) {
+                                            var URL = '@ViewBag.env' + '/api/Pictures/DeletePicture1/'
                                                     $.ajax({
-                                                        url: 'https://localhost:44340/api/Pictures/DeletePicture1/',
+                                                        url: URL,
                                                         type: 'POST',
                                                         //contentType: 'application/x-www-form-urlencoded',
                                                         data: { PictureId: PicId },

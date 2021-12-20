@@ -12,19 +12,19 @@ namespace BlessTrading.UI.Controllers
 {
     public class AdminController : Controller
     {
+        private string env = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+        
         public IActionResult Index()
         {
             return View("Admin/AdminLogin");
         }
-        public async Task<ActionResult<AdminUsers>>   CheckAdminLogin(IFormCollection collection)
+        public async Task<ActionResult<AdminUsers>> CheckAdminLogin(IFormCollection collection)
         {
-
-
             try
             {
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Clear();
-                UriBuilder builder = new UriBuilder("https://localhost:44340/api/Admin/ValidateAdminUser?");
+                UriBuilder builder = new UriBuilder(env + "/api/Admin/ValidateAdminUser?");
 
                 builder.Query = "userid=" + collection["userid"] + "&pwd=" + collection["pwd"];
                 HttpResponseMessage Res = await client.GetAsync(builder.Uri);
@@ -32,16 +32,16 @@ namespace BlessTrading.UI.Controllers
                 var a = JsonConvert.DeserializeObject<AdminUsers>(adminUser);
                 if (a.UserId == null)
                 {
-                    
                     ViewBag.msg = "Invalid UserId or Password";
                     return View("Admin/AdminLogin");
                 }
                 ViewBag.UserId = a.UserId;
+                ViewBag.env = env;
                 return View("Admin/AdminMain");
             }
             catch(Exception e )
             {
-                ViewBag.msg = "Invalid UserId or Password";
+                ViewBag.msg = "Invalid UserId or Password with ENV" + env;
                 return View("Admin/AdminLogin");
             }
 

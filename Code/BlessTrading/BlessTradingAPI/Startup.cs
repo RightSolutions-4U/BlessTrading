@@ -29,17 +29,34 @@ namespace BlessTradingAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<blesstradingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlessTradingDatabase")));
-            services.AddCors(options =>
-            {   
-                //for development
-                /*options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")*/
-                //for Live
-                options.AddPolicy("CorsApi", builder => builder.WithOrigins("http://test.blesstrading.net")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                );
-            });
-            services.AddControllers();
+            string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+/*            if(env== "Development") { 
+                services.AddCors(options =>
+                {   
+                    //for development
+                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")
+                    //for Live
+                    *//*options.AddPolicy("CorsApi", builder => builder.WithOrigins("http://test.blesstrading.net")*//*
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    );
+                });
+            }
+            else
+            {
+*/                services.AddCors(options =>
+                {
+                    //for development
+                    /*options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")*/
+                    //for Live
+                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("http://test.blesstrading.net")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    );
+                });
+
+/*            }
+*/            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BlessTradingAPI", Version = "v1" });
