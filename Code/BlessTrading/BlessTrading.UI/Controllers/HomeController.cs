@@ -30,7 +30,7 @@ namespace BlessTrading.UI.Controllers
                 Load load = new Load();
                 var clientF = new HttpClient();
                 
-                var urlF = "https://testapi.blesstrading.net/api/Products/GetFeatuedProducts";
+                var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
                 /*var urlF = env + "/api/Products/GetFeatuedProducts";*/
 
                 var responseF = await clientF.GetAsync(urlF);
@@ -38,7 +38,7 @@ namespace BlessTrading.UI.Controllers
                 load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
 
                 var clientN = new HttpClient();
-                var urlN = "https://testapi.blesstrading.net/api/Products/GetNewProducts"; 
+                var urlN = "https://localhost:44340/api/Products/GetNewProducts"; 
                  /*var urlN = env + "/api/Products/GetNewProducts";*/
                  var responseN = await clientN.GetAsync(urlN);
                 var NewProduct = responseN.Content.ReadAsStringAsync().Result;

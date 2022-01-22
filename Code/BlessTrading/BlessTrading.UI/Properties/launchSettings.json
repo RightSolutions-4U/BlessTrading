@@ -12,7 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_URLS": "https://testapi.blesstrading.net",
+        "ASPNETCORE_URLS": "https://localhost:44340",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
@@ -20,7 +20,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_URLS": "https://testapi.blesstrading.net",
+        "ASPNETCORE_URLS": "https://localhost:44340",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",

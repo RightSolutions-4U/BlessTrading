@@ -91,8 +91,10 @@
                 </ul>
             </nav>
             <script type="text/javascript">
-                $("#myimage").click(function openmodal() {
-                    alert('Called');
+                $(document).ready(function () {
+
+                    $(document).on("click", "a.offer-img", function () {
+                        alert('clicked');
                         var imgsrc = $(this).data('imageurl');
                         $("#productimage").prop("src", imgsrc);
 
@@ -111,8 +113,30 @@
                         var discount = $(this).data('discount');
                         $("#discount").html(discount);
                     });
-            </script>
+                    @*$('#myimage').click(function openmodal1(e) {
+                        e.preventDefault();
+                        alert('here in');
+                        var imgsrc = $(this).data('imageurl');
+                        $("#productimage").prop("src", imgsrc);
 
+                        var name1 = $(this).data('name1');
+                        alert(name1);
+                        $("#name1").html(name1);
+
+                        var sdescription = $(this).data('sdescription');
+                        $("#sdescription").html(sdescription);
+
+                        var fdescription = $(this).data('fdescription');
+                        $("#fdescription").html(fdescription);
+
+                        var price = $(this).data('price');
+                        $("#price").html(price);
+
+                        var discount = $(this).data('discount');
+                        $("#discount").html(discount);
+                    });*@
+                });
+            </script>
             <div class=" tab-content tab-content-t ">
                 <div class="tab-pane active text-style" id="tab1">
                     <div class=" con-w3l">
@@ -120,22 +144,24 @@
                         {
                             <div class="col-md-3 m-wthree">
                                 <div class="col-m">
-                                    <a href="#" id ="myimage" onclick="openmodal();"  data-toggle="modal" data-target="#myModal1" class="offer-img" data-name1="@i.Name" data-sdescription="@i.ShortDescription" data-fdescription="@i.FullDescription" data-price="@i.Price" data-discount="@i.Discount" >
+                                    
                                         @foreach (var p in i.ProductPictureMappings)
                                         {
                                             @*<a href="#" id="myimage" data-toggle="modal" data-target="#myModal1" onclick="PrintStore();" data-imageurl="@p.Picture.FileName" data-name1="@i.Name" data-sdescription="@i.ShortDescription" data-fdescription="@i.FullDescription" data-price="@i.Price" data-discount="@i.Discount" class="offer-img">*@
-
+                                            
                                             int len = i.ProductPictureMappings.Count;
 
                                             for (int j = 0; j < len;)
                                             {
-                                                <img src="@Url.Content(p.Picture.FileName )" class="img-fluid" alt="">
-                                                j = len;
-                                                break;
-                                            }
+                                    <a href="#" id="myimage" class="offer-img" name="myimage" onclick="openmodal1(this);" data-imageurl="@p.FileName" data-toggle="modal" data-target="#myModal1" data-name1="@i.Name" data-sdescription="@i.ShortDescription" data-fdescription="@i.FullDescription" data-price="@i.Price" data-discount="@i.Discount">
+                                        <img src="@Url.Content(p.FileName )" class="img-fluid" alt="">
+                                    </a>
+                                            j = len;
                                             break;
                                         }
-                                        </a>
+                                        break;
+                                        }
+                                    
                                         @*</a>*@
 
                                         <div class="offer"><p><span>Offer</span></p></div>

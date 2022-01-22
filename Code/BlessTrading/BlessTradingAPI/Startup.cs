@@ -47,10 +47,10 @@ namespace BlessTradingAPI
 */                services.AddCors(options =>
                 {
                     //for development
-                    /*options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")*/
-                    //for Live
-                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://test.blesstrading.net")
-                    .AllowAnyHeader()
+                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")
+//for Live
+/*                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://test.blesstrading.net")
+*/                    .AllowAnyHeader()
                     .AllowAnyMethod()
                     );
                 });

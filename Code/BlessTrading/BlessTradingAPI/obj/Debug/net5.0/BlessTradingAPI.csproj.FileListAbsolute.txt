@@ -192,3 +192,6 @@ D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\Bless
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\BlessTradingAPI.genruntimeconfig.cache
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Debug\net5.0\BlessTradingAPI.Views.dll
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Debug\net5.0\BlessTradingAPI.csproj.CopyComplete
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Debug\net5.0\Sentry.dll
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Debug\net5.0\Sentry.AspNetCore.dll
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Debug\net5.0\Sentry.Extensions.Logging.dll

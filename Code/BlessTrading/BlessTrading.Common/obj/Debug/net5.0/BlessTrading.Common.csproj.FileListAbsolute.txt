@@ -1,4 +1,3 @@
-D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.Common\obj\Debug\net5.0\BlessTrading.Common.csproj.AssemblyReference.cache
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.Common\obj\Debug\net5.0\BlessTrading.Common.GeneratedMSBuildEditorConfig.editorconfig
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.Common\obj\Debug\net5.0\BlessTrading.Common.AssemblyInfoInputs.cache
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.Common\obj\Debug\net5.0\BlessTrading.Common.AssemblyInfo.cs

@@ -15,7 +15,7 @@ namespace BlessTrading.UI.Controllers
         //for local
         /*private string env = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");*/
         //for live
-        private string env = "https://testapi.blesstrading.net";
+        private string env = "https://localhost:44340";
 
         public IActionResult Index()
         {
