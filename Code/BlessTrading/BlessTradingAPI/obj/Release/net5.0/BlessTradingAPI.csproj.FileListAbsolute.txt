@@ -190,3 +190,6 @@ D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Release\net5.0\Ble
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Release\net5.0\ref\BlessTradingAPI.dll
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Release\net5.0\BlessTradingAPI.pdb
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\obj\Release\net5.0\BlessTradingAPI.genruntimeconfig.cache
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Release\net5.0\Sentry.dll
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Release\net5.0\Sentry.AspNetCore.dll
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTradingAPI\bin\Release\net5.0\Sentry.Extensions.Logging.dll

@@ -12,8 +12,11 @@ namespace BlessTrading.UI.Controllers
 {
     public class AdminController : Controller
     {
-        private string env = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
-        
+        //for local
+        /*private string env = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");*/
+        //for live
+        private string env = "https://testapi.blesstrading.net";
+
         public IActionResult Index()
         {
             return View("Admin/AdminLogin");

@@ -29,7 +29,7 @@ namespace BlessTradingAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<blesstradingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlessTradingDatabase")));
-            string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            string env =  Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 /*            if(env== "Development") { 
                 services.AddCors(options =>
                 {   
@@ -49,7 +49,7 @@ namespace BlessTradingAPI
                     //for development
                     /*options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://localhost:44336")*/
                     //for Live
-                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("http://test.blesstrading.net")
+                    options.AddPolicy("CorsApi", builder => builder.WithOrigins("https://test.blesstrading.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     );
@@ -66,6 +66,7 @@ namespace BlessTradingAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,6 +77,7 @@ namespace BlessTradingAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseSentryTracing();
             app.UseCors("CorsApi");
             app.UseAuthorization();
 

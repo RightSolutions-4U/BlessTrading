@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Hosting.Internal;
 using System.Linq;
+using Sentry;
 
 namespace BlessTrading.API.Controllers
 {
@@ -21,11 +22,13 @@ namespace BlessTrading.API.Controllers
         private readonly blesstradingContext _context;
         /*[Obsolete]*/
         private readonly IWebHostEnvironment _hostingEnvironment;
-       
-        public PicturesController(blesstradingContext context, IWebHostEnvironment hostingEnvironment)
+        private readonly IHub _sentryHub;
+        public PicturesController(blesstradingContext context, IWebHostEnvironment hostingEnvironment,
+                                  IHub sentryHub)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _sentryHub = sentryHub;
         }
         // GET: PicturesController
         [HttpGet("Index")]
@@ -70,14 +73,17 @@ namespace BlessTrading.API.Controllers
             /*string projectRootPath = _hostingEnvironment.ContentRootPath;*/
 
             /*projectRootPath = projectRootPath.Replace("DesiClothing4u.API", "DesiClothing4u.UI");*/
-            projectRootPath = projectRootPath1.Replace("BlessTradingAPI", "BlessTrading.UI");
-            
-           //if (string.IsNullOrWhiteSpace(projectRootPath))
-           // {
-           //     projectRootPath = Directory.GetCurrentDirectory();
-           // }
+            //For local
+            //projectRootPath = projectRootPath1.Replace("BlessTradingAPI", "BlessTrading.UI");
+            //For live
+            projectRootPath = projectRootPath.Replace("testapi", "test");
+
+            //if (string.IsNullOrWhiteSpace(projectRootPath))
+            // {
+            //     projectRootPath = Directory.GetCurrentDirectory();
+            // }
             /*string path = "/wwwroot/ProductImages/";*/
-            string path = "/wwwroot/ProductImages/";
+            string path = "/ProductImages/";
             string path_virtual= "/ProductImages/";
             var id = Id["Id"];
             //if (!Directory.Exists(projectRootPath+ path))
@@ -93,6 +99,7 @@ namespace BlessTrading.API.Controllers
                 var fileName = Path.GetFileName(postedFile.FileName) + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
 
                 //Saving file to Folder
+                var childSpan = _sentryHub.GetSpan()?.StartChild("additional-work");
                 try
                 {
 
@@ -101,9 +108,7 @@ namespace BlessTrading.API.Controllers
                         postedFile.CopyTo(stream);
                         uploadedFiles.Add(fileName);
                     }
-                }
-                catch (Exception e) { 
-                }
+                
                 var ProdId = Convert.ToInt32(id.ToString());
                 //Saving data to database
                 Picture picture = new Picture
@@ -130,6 +135,12 @@ namespace BlessTrading.API.Controllers
                 map.DisplayOrder = 0;
                 _context.ProductPictureMappings.Add(map);
                 await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    childSpan?.Finish(e);
+                    throw;
+                }
             }
             return await PostPictureJson(PicId);
         }

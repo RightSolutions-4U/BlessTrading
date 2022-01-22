@@ -1,0 +1,34 @@
+
+You can login to our billing system at https://portal.hostgator.com/login, using the email address we sent this email to, and the password included in your Welcome email.
+
+	Password : 	Q6pF0UszUpSs38rU
+
+    Shared Plan:        Windows Personal
+    Your Control Panel: https://hgws10.win.hostgator.com:8443
+    Username:           blessing
+    Domain:             blesstrading.net
+    Password:           tIyICVK1to7O3z5t
+    1st Nameserver:     ns19.win.hostgator.com
+    2nd Nameserver:     ns20.win.hostgator.com
+    Server IP:          192.185.6.99
+https://test.blesstrading.net/Admin/CheckAdminLogin
+
+DB user
+blessing_test
+Mohtashim098@
+
+
+
+
+ticket 37927018
+
+"ConnectionStrings": {
+    "BlessTradingDatabase": "Server=127.0.0.1 ; Database=blessing_testAPI; user id= blessing_test ; password = Mohtashim098@;"
+    //"DesiClothing4uDatabase": "Server=DESKTOP-TG871HS ; Database=desiclothing; user id= sa ; password = Aug31999_1;"
+  },
+  
+  Sentry
+  bless
+  blesstrading.net
+  info@blesstrading.net
+  Mohtashim098@

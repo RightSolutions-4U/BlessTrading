@@ -20,6 +20,16 @@ namespace BlessTradingAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    // Add the following line:
+                    webBuilder.UseSentry(o =>
+                    {
+                        o.Dsn = "https://6760eb401c0e483eb562686d7e68bf2d@o1123194.ingest.sentry.io/6160866";
+                        // When configuring for the first time, to see what the SDK is doing:
+                        o.Debug = true;
+                        // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+                        // We recommend adjusting this value in production.
+                        o.TracesSampleRate = 1.0;
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

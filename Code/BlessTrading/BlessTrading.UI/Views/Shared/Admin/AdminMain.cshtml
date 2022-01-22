@@ -20,7 +20,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         function PopCategories() {
-            var URL = '@ViewBag.env' + '/api/Products/GetCategories';
+            @*var url = '@ViewBag.env';*@
+            var url = 'https://testapi.blesstrading.net/api/Products/GetCategories';
+            var URL = url ;
             $.ajax({
                 url: URL,
                 type: 'GET',
