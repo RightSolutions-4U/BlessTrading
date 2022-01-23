@@ -213,3 +213,4 @@ D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Bless
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\Admin\Admin.cshtml.g.cs
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\Admin\AdminLogin.cshtml.g.cs
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\Admin\AdminMain.cshtml.g.cs
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\ProductByCat1.cshtml.g.cs

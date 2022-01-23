@@ -20,5 +20,13 @@ namespace BlessTrading.Common.Models
 
         public string VirtualPath { get; set; }
 
+        public string FileName
+        {
+            get
+            {
+                return VirtualPath + SeoFilename;
+            }
+        }
+
     }
 }

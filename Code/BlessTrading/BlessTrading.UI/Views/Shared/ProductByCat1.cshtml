@@ -1,0 +1,65 @@
+﻿@using BlessTrading.Common.Models
+@model LoadProductExt
+@{
+    ViewData["Title"] = "Products";
+}
+<div class="row">
+    <br />
+    <div class="banner_inner">
+        <div class="services-breadcrumb">
+            <div class="inner_breadcrumb">
+                <ul class="short">
+                    <li>
+                        <a href="#">Home</a>
+                        <i>|</i>
+                        @ViewBag.cat
+                    </li>
+                </ul>
+            </div>
+            <div style="background-color:darkslategrey">
+            <ul>
+                <li><a href="#">Home >> </a> @ViewBag.cat</li>
+            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class=" tab-content tab-content-t ">
+        <div class="tab-pane active text-style" id="tab1">
+            <div class=" con-w3l">
+                @foreach (var i in Model.ProductExts)
+                {
+                    <div class="col-md-3 m-wthree">
+                        <div class="col-m">
+                            <a href="#" id="myimage" class="offer-img" name="myimage" data-imageurl="@i.FileName" data-toggle="modal" data-target="#myModal1" data-name1="@i.Name" data-sdescription="@i.ShortDescription" data-fdescription="@i.FullDescription" data-price="@i.Price" data-discount="@i.Discount">
+                                <img src="@Url.Content(i.FileName)" class="img-fluid" alt="">
+                            </a>
+
+                            <div class="offer"><p><span>Offer</span></p></div>
+                            <div class="mid-1">
+                                <div class="women">
+                                    <h6><a href="single.html">@i.Name</a></h6>
+                                </div>
+                                <div class="mid-2">
+                                    <p><label>@i.Price</label><em class="item_price">@i.Discount</em></p>
+                                    <div class="block">
+                                        <div class="starbox small ghosting"> </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="add">
+                                    <button class="btn btn-danger my-cart-btn my-cart-b " data-id="1" data-name="Moong" data-summary="summary 1" data-price="1.50" data-quantity="1" data-image="images/of.png">Add to Cart</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

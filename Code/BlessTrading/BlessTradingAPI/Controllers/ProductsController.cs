@@ -80,7 +80,21 @@ namespace BlessTrading.API.Controllers
                 return null;
             }
         }
-
+        [HttpGet("GetCategory")]
+        public IEnumerable<ProductCategory> GetCategory(int CId)
+        {
+            try
+            {
+                var Category = _context.ProductCategories
+                .FromSqlRaw("Execute dbo.GetCategory  {0}", CId);
+                return Category;
+            }
+            catch (Exception e)
+            {
+                /*incase of no category*/
+                return null;
+            }
+        }
         // GET: api/Products/5
         [HttpGet("GetProductDetail")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductDetail(int Id)
