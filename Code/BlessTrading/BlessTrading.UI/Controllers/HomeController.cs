@@ -1,6 +1,7 @@
 ﻿using BlessTrading.Common.Models;
 using BlessTrading.UI.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BlessTrading.UI.Controllers
@@ -43,11 +45,11 @@ namespace BlessTrading.UI.Controllers
                  var responseN = await clientN.GetAsync(urlN);
                 var NewProduct = responseN.Content.ReadAsStringAsync().Result;
                 load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
- /*               if (Request.Cookies["userid"] != null)
+                if (Request.Cookies["userid"] != null)
                 {
                     var clientC = new HttpClient();
-                    *//*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*//*
-                    UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");
+                    UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Customers/LoginID?");
+                    /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
                     builderC.Query = "UserId=" + Request.Cookies["userid"];
                     HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
                     if (responseC.IsSuccessStatusCode)
@@ -58,7 +60,7 @@ namespace BlessTrading.UI.Controllers
 
                     }
                 }
-*/                ViewBag.Vendormessage = TempData["Vendormessage"];
+                ViewBag.Vendormessage = TempData["Vendormessage"];
                     return View("Index", load);
             }
             catch (Exception e)
@@ -78,7 +80,91 @@ namespace BlessTrading.UI.Controllers
         {
             return View();
         }
+        // POST: AccountController/Create
+        [HttpPost]
 
+        public async Task<ActionResult<Customer>> CreateCustomer([FromBody] dynamic MyCustomer)
+        {
+            try
+
+            {
+                var sMyCustomer = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(MyCustomer.ToString());
+                Address address = new Address
+                {
+                    FirstName = sMyCustomer.FirstName,
+                    LastName = sMyCustomer.LastName,
+                    Address1 = sMyCustomer.StreetAddress1,
+                    Address2 = sMyCustomer.StreetAddress2,
+                    City = sMyCustomer.City,
+                    Email = sMyCustomer.Email,
+                    CreatedOnUtc = DateTime.UtcNow,
+                    ZipPostalCode = sMyCustomer.ZipCode,
+                    PhoneNumber = sMyCustomer.phoneno
+                };
+                string output = JsonConvert.SerializeObject(address);
+                var data = new StringContent(output, Encoding.UTF8, "application/json");
+                /*var url = "https://localhost:44356/api/Addresses";*/
+                var url = "https://localhost:44356/api/Addresses";
+
+                var client = new HttpClient();
+                var response = await client.PostAsync(url, data);
+                var Address = response.Content.ReadAsStringAsync().Result;
+                var BillingAddress1 = JsonConvert.DeserializeObject<Address>(Address);
+                var BillingAddressId = BillingAddress1.Id;
+
+                Customer customer = new Customer
+                {
+                    Username = sMyCustomer.Email,
+                    Email = sMyCustomer.Email,
+                    EmailToRevalidate = "",
+                    SystemName = "",
+                    BillingAddressId = BillingAddress1.Id,
+                    ShippingAddressId = BillingAddress1.Id,
+                    AdminComment = "",
+                    IsTaxExempt = true,
+                    AffiliateId = 0,
+                    VendorId = 0,
+                    HasShoppingCartItems = false,
+                    RequireReLogin = false,
+                    FailedLoginAttempts = 0,
+                    Active = true,
+                    Deleted = false,
+                    IsSystemAccount = false,
+                    LastIpAddress = "",
+                    CreatedOnUtc = DateTime.UtcNow,
+                    RegisteredInStoreId = 1,
+                    Password = sMyCustomer.Password
+                };
+                output = JsonConvert.SerializeObject(customer);
+                data = new StringContent(output, Encoding.UTF8, "application/json");
+                /*url = "https://localhost:44356/api/Customers";*/
+                url = "https://localhost:44356/api/Customers";
+
+                client = new HttpClient();
+                response = await client.PostAsync(url, data);
+                var Customer = response.Content.ReadAsStringAsync().Result;
+                var a = JsonConvert.DeserializeObject<Customer>(Customer);
+                ViewBag.Customer = a;
+                ViewBag.UserName = a.Username;
+                //Store in cookies
+                if (Request.Cookies["userid"] == null)
+                {
+                    CookieOptions option = new CookieOptions();
+                    option.Expires = DateTime.Now.AddDays(1);
+                    option.IsEssential = true;
+                    Response.Cookies.Append("userid", a.Id.ToString(), option);
+                    ViewBag.UserName = a.Username;//Request.Cookies["userid"];
+                    /* cookie code ends here*/
+                }
+
+                return View(a);
+                //return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

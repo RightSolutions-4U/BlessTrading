@@ -16,8 +16,20 @@ namespace BlessTrading.UI.Controllers
         // GET: Customer Registration
         public ActionResult Index()
         {
-            return View("~/Views/Shared/Register.cshtml");
+            return View("~/Views/Shared/register.cshtml");
         }
+
+        /*public ActionResult Index(string pagename)
+        {
+            return View("~/Views/Shared/login.cshtml");
+        }*/
+
+        public ActionResult Login()
+        {
+            return View("~/Views/Shared/login.cshtml");
+        }
+
+
 
         // GET: AccountController/Create
         public ActionResult Create()
@@ -47,8 +59,7 @@ namespace BlessTrading.UI.Controllers
                 };
                 string output = JsonConvert.SerializeObject(address);
                 var data = new StringContent(output, Encoding.UTF8, "application/json");
-                var url = "https://localhost:44356/api/Addresses";
-                /*var url = "https://localhost:44356/api/Addresses";*/
+                var url = "https://localhost:44340/api/Addresses/PostAddress";
 
                 var client = new HttpClient();
                 var response = await client.PostAsync(url, data);
@@ -84,26 +95,27 @@ namespace BlessTrading.UI.Controllers
 
                 output = JsonConvert.SerializeObject(customer);
                 data = new StringContent(output, Encoding.UTF8, "application/json");
-                url = "https://localhost:44356/api/Customers";
+                url = "https://localhost:44340/api/Customers";
 
                 client = new HttpClient();
                 response = await client.PostAsync(url, data);
                 var Customer = response.Content.ReadAsStringAsync().Result;
                 var a = JsonConvert.DeserializeObject<Customer>(Customer);
                 ViewBag.Customer = a;
-                return View("~/Views/Home/Index", a);
                 //return RedirectToAction(nameof(Index));
+                
+                return View("../Home/Index");
             }
             catch
             {
-                return View("~/Views/Home/Index");
+                return View("Index");
             }
         }
 
         // GET: AccountController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View("~/Views/Shared/login.cshtml");
         }
 
         // POST: AccountController/Edit/5
@@ -120,8 +132,108 @@ namespace BlessTrading.UI.Controllers
                 return View();
             }
         }
-
+        //By Mohtashim on Nov 29, 2020
+        public async Task<ActionResult<Customer>> CheckLogin(IFormCollection collection)
+        {
+            Customer cutomer = new Customer();
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Clear();
+            UriBuilder builder = new UriBuilder("https://localhost:44340/api/Customers/ValidateCustomer?");
+            /*UriBuilder builder = new UriBuilder("https://localhost:44340/api/Customers/ValidateCustomer?");*/
+            builder.Query = "email=" + collection["Email"] + "&UserPassword=" + collection["Password"];
+            HttpResponseMessage Res = await client.GetAsync(builder.Uri);
+            var Customer = Res.Content.ReadAsStringAsync().Result;
+            var a = JsonConvert.DeserializeObject<Customer>(Customer);
+            //Store in cookies
+            if (a.Email == null)
+            {
+                ViewBag.message = "Invalid UserId or Password";
+                return View("~/Views/Shared/login.cshtml");
+            }
+            if (Request.Cookies["userid"] == null)
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddDays(50);
+                option.IsEssential = true;
+                Response.Cookies.Append("userid", a.Id.ToString(), option);
+            }
+            Load load = new Load();
+            //Featured--field name MarkAsNew
+            var clientF = new HttpClient();
+            var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
+            var responseF = await clientF.GetAsync(urlF);
+            var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
+            load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
+            //New Arrivals--field name Recent
+            var clientN = new HttpClient();
+            var urlN = "https://localhost:44340/api/Products/GetNewProducts";
+            var responseN = await clientN.GetAsync(urlN);
+            var NewProduct = responseN.Content.ReadAsStringAsync().Result;
+            load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
+            //Customers
+            if (Request.Cookies["userid"] != null)
+            {
+                var clientC = new HttpClient();
+                UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Customers/LoginID?");
+                builderC.Query = "UserId=" + Request.Cookies["userid"];
+                HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
+                if (responseC.IsSuccessStatusCode)
+                {
+                    var Users = responseC.Content.ReadAsStringAsync().Result;
+                    load.Customer = JsonConvert.DeserializeObject<Customer>(Users);
+                    ViewBag.UserName = load.Customer.Username;
+                }
+                else
+                {
+                    ViewBag.message = "Invalid UserId or Password";
+                    return View("~/Views/Shared/login.cshtml");
+                }
+            }
+                return View("../Home/Index", load);
+        }
         // GET: AccountController/Delete/5
+        public async Task<ActionResult> Logout()
+        {
+                /*CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddDays(50);*/
+                if (Request.Cookies["userid"] != null)
+                {
+                    Response.Cookies.Delete("userid");
+                }
+            Load load = new Load();
+            //Featured--field name MarkAsNew
+            var clientF = new HttpClient();
+            var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
+            var responseF = await clientF.GetAsync(urlF);
+            var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
+            load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
+            //New Arrivals--field name Recent
+            var clientN = new HttpClient();
+            var urlN = "https://localhost:44340/api/Products/GetNewProducts";
+            var responseN = await clientN.GetAsync(urlN);
+            var NewProduct = responseN.Content.ReadAsStringAsync().Result;
+            load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
+            //Customers
+            if (Request.Cookies["userid"] != null)
+            {
+                var clientC = new HttpClient();
+                UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Customers/LoginID?");
+                builderC.Query = "UserId=" + Request.Cookies["userid"];
+                HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
+                if (responseC.IsSuccessStatusCode)
+                {
+                    var Users = responseC.Content.ReadAsStringAsync().Result;
+                    load.Customer = JsonConvert.DeserializeObject<Customer>(Users);
+                    ViewBag.UserName = load.Customer.Username;
+                }
+                else
+                {
+                    ViewBag.message = "Invalid UserId or Password";
+                    return View("~/Views/Shared/login.cshtml", load);
+                }
+            }
+            return View("../Home/Index",load);
+        }
         public ActionResult Delete(int id)
         {
             return View();

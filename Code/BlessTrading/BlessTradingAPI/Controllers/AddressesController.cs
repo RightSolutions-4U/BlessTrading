@@ -79,10 +79,16 @@ namespace BlessTrading.API.Controllers
         [HttpPost("PostAddress")]
         public async Task<ActionResult<Address>> PostAddress(Address address)
         {
+            try { 
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
-
+            }
+            catch(Exception e)
+            {
+                return NoContent();
+            }
             return CreatedAtAction("GetAddress", new { id = address.Id }, address);
+
         }
 
         // DELETE: api/Addresses/5
