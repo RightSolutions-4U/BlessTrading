@@ -216,3 +216,4 @@ D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\ProductByCat1.cshtml.g.cs
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\register.cshtml.g.cs
 D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\login.cshtml.g.cs
+D:\WorkNew\BlessTrading\Code\BlessTrading\BlessTrading.UI\obj\Debug\net5.0\Razor\Views\Shared\MyCart.cshtml.g.cs
