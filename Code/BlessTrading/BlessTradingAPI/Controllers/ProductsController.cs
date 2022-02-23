@@ -382,6 +382,25 @@ namespace BlessTrading.API.Controllers
             }
         }
 
+        [HttpGet("GetProductsByMainCat")]
+        public IEnumerable<productExt> GetProductsByMainCat(int CatId)
+        {
+            /*Added by Mohtashim on FEB 13, 2022*/
+            try
+            {
+                int CategoryId = CatId;
+                var productExt = _context.productExts
+                .FromSqlRaw("Execute dbo.GetProductByMainCategory {0}", CatId)
+                .ToList();
+
+                return productExt;
+            }
+            catch (Exception e)
+            {
+                /*if the vendor dont have any product*/
+                return null;
+            }
+        }
         [HttpGet("GetCategoryByProduct")]
         public IEnumerable<productExt> GetCategoryByProduct(int Id)
         {
@@ -391,6 +410,24 @@ namespace BlessTrading.API.Controllers
                 int ProductId = Id;
                 var productExt = _context.productExts
                 .FromSqlRaw("Execute dbo.GetCategoryIdByProduct {0}", ProductId)
+                .ToList();
+
+                return productExt;
+            }
+            catch (Exception e)
+            {
+                /*if the vendor dont have any product*/
+                return null;
+            }
+        }
+        [HttpGet("SearchProducts")]
+        public IEnumerable<productExt> GetProductsByCat(string sql)
+        {
+            /*Added by Mohtashim on Feb 21, 2022*/
+            try
+            {
+                var productExt = _context.productExts
+                .FromSqlRaw("Execute dbo.PrSearch {0}", sql)
                 .ToList();
 
                 return productExt;

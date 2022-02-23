@@ -39,6 +39,39 @@ namespace BlessTrading.UI.Controllers
                 var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
                 load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
 
+                var clientC1 = new HttpClient();
+                UriBuilder builderC1 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
+                /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
+                builderC1.Query = "CatId=19";
+                HttpResponseMessage responseC1 = await clientC1.GetAsync(builderC1.Uri);
+                if (responseC1.IsSuccessStatusCode)
+                {
+                    var MainCat1 = responseC1.Content.ReadAsStringAsync().Result;
+                    load.MainCat1 = JsonConvert.DeserializeObject<Product[]>(MainCat1);
+                }
+
+                var clientC2 = new HttpClient();
+                UriBuilder builderC2 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
+                /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
+                builderC2.Query = "CatId=26";
+                HttpResponseMessage responseC2 = await clientC1.GetAsync(builderC2.Uri);
+                if (responseC2.IsSuccessStatusCode)
+                {
+                    var MainCat2 = responseC2.Content.ReadAsStringAsync().Result;
+                    load.MainCat2 = JsonConvert.DeserializeObject<Product[]>(MainCat2);
+                }
+
+                var clientC3 = new HttpClient();
+                UriBuilder builderC3 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
+                /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
+                builderC3.Query = "CatId=29";
+                HttpResponseMessage responseC3 = await clientC1.GetAsync(builderC3.Uri);
+                if (responseC3.IsSuccessStatusCode)
+                {
+                    var MainCat3 = responseC3.Content.ReadAsStringAsync().Result;
+                    load.MainCat3 = JsonConvert.DeserializeObject<Product[]>(MainCat3);
+                }
+
                 var clientN = new HttpClient();
                 var urlN = "https://localhost:44340/api/Products/GetNewProducts"; 
                  /*var urlN = env + "/api/Products/GetNewProducts";*/
@@ -61,6 +94,15 @@ namespace BlessTrading.UI.Controllers
                     }
                 }
                 ViewBag.Vendormessage = TempData["Vendormessage"];
+                if( TempData["cartcount"] != null )
+                { 
+                    ViewBag.cartcount = TempData["cartcount"];
+                }
+                else
+                {
+                    ViewBag.cartcount = 0;
+                }
+                
                     return View("Index", load);
             }
             catch (Exception e)

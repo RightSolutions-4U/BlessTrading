@@ -500,10 +500,10 @@ span.fa.fa-shopping-cart.my-cart-icon {
     background: rgba(255, 255, 255, 0.45);
 }
 .search-form input[type='submit']{
-	    width: 40px;
+	width: 40px;
     height: 41px;
     outline: none;
-    border: 1px solid #fff;
+    border: 1px solid #FC6914;
     background: url(../images/can.png) no-repeat 6px 7px #FCCD1E;
     display: inline-block;
 }
@@ -771,8 +771,12 @@ a:focus {
 	color: #000;
     font-size: 1.8em;	
 }
+.span-1 label {
+    color: #000;
+}
 p.in-para{
-color: #B3B3B3;
+/*color: #B3B3B3;*/
+color:#000
     font-size: 0.9em;
     line-height: 2em;
     margin: 1em 0 ;
@@ -784,7 +788,7 @@ color: #B3B3B3;
     padding-bottom: 1em;
 }
 span.reducedfrom {
-	    color: #FAB005;
+	color: #FAB005;
     font-size: 1.5em;   
 }
 
@@ -796,12 +800,14 @@ h4.quick {
 	
 }
 p.quick_desc {
-	color:#B3B3B3;
+	color:#000;
 	font-size:0.9em;
 	line-height: 2em;
 	margin: 1em 0 2em;
 }
-
+label.modal {
+    color:#000;
+}
 /* Shutter In Vertical */
 .my-cart-btn1 {
   display: inline-block;
@@ -3171,3 +3177,26 @@ h1.t-button {
     background-color: darkslategrey;
     color:white;
 }
+.button-Cart{
+    color:#fff;
+}
+
+    .button-Cart input[type="button"] {
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 1em;
+        background: #FC6914 !important;
+        padding: 9px 20px;
+        width: 100%;
+        margin-top: 1em;
+    }
+
+.button-Cart input[type="button"]:hover {
+            background: #62BF43 !important;
+            transition: .5s ease-in-out;
+            -webkit-transition: .5s ease-in-out;
+            -moz-transition: .5s ease-in-out;
+            -o-transition: .5s ease-in-out;
+            -ms-transition: .5s ease-in-out;
+        }

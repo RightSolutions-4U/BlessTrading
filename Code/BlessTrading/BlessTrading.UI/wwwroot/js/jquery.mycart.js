@@ -177,7 +177,7 @@
     var classAffixMyCartIcon = 'my-cart-icon-affix';
 
     $cartBadge.text(ProductManager.getTotalQuantity());
-
+      
     if(!$("#" + idCartModal).length) {
       $('body').append(
         '<div class="modal fade" id="' + idCartModal + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">' +
@@ -185,20 +185,24 @@
         '<div class="modal-content">' +
         '<div class="modal-header">' +
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+        '<button type="button" class="btn btn-success" onclick="location.href=@Url.Action(" Index", "Home")" > Continue Shopping >></button >' +
+        '<button type="button" class="btn btn-success" onclick="location.href=@Url.Action(" CheckOut", "Carts")" > Check Out >></button >' +
         '<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-shopping-cart"></span> My Cart</h4>' +
         '</div>' +
         '<div class="modal-body">' +
         '<table class="table table-hover table-responsive" id="' + idCartTable + '"></table>' +
         '</div>' +
         '<div class="modal-footer">' +
-        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
-
+        '<button type="button" class="btn btn-default" data-dismiss="modal">Shut down</button>' +
+        '<button type="button" class="btn btn-success" onclick="location.href=@Url.Action(" Index", "Home")" > Continue Shopping >></button >'+
+        '<button type="button" class="btn btn-success" onclick="location.href=@Url.Action(" CheckOut", "Carts")" > Check Out >></button >'+
         '</div>' +
         '</div>' +
         '</div>' +
         '</div>'
       );
     }
+      
 
     var drawTable = function(){
       var $cartTable = $("#" + idCartTable);
@@ -279,7 +283,6 @@
         }
       });
     }
-
     $cartIcon.click(function(){
       options.showCheckoutModal ? showModal() : options.clickOnCartIcon($cartIcon, ProductManager.getAllProducts(), ProductManager.getTotalPrice(), ProductManager.getTotalQuantity());
     });
@@ -350,8 +353,7 @@
       var summary = $target.data('summary');
       var price = $target.data('price');
       var quantity = $target.data('quantity');
-      var image = $target.data('image');
-
+        var image = $target.data('image');
       ProductManager.setProduct(id, name, summary, price, quantity, image);
       $cartBadge.text(ProductManager.getTotalQuantity());
     });
@@ -360,7 +362,9 @@
 
 
   $.fn.myCart = function (userOptions) {
-    loadMyCartEvent(userOptions);
+      /*alert('called');*/
+
+      loadMyCartEvent(userOptions);
     return $.each(this, function () {
       new MyCart(this, userOptions);
     });

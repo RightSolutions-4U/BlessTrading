@@ -74,16 +74,18 @@ namespace BlessTrading.API.Controllers
 
             /*projectRootPath = projectRootPath.Replace("DesiClothing4u.API", "DesiClothing4u.UI");*/
             //For local
-            //projectRootPath = projectRootPath1.Replace("BlessTradingAPI", "BlessTrading.UI");
+            projectRootPath = projectRootPath1.Replace("BlessTradingAPI", "BlessTrading.UI");
             //For live
-            projectRootPath = projectRootPath.Replace("testapi", "test");
+            /*projectRootPath = projectRootPath1.Replace("testapi", "test");*/
 
             //if (string.IsNullOrWhiteSpace(projectRootPath))
             // {
             //     projectRootPath = Directory.GetCurrentDirectory();
             // }
-            /*string path = "/wwwroot/ProductImages/";*/
-            string path = "/ProductImages/";
+            /* for local */
+            string path = "/wwwroot/ProductImages/";
+            /* for live*/
+            /*string path = "/ProductImages/";*/
             string path_virtual= "/ProductImages/";
             var id = Id["Id"];
             //if (!Directory.Exists(projectRootPath+ path))
@@ -96,7 +98,7 @@ namespace BlessTrading.API.Controllers
             foreach (IFormFile postedFile in file)
             {
                 var Extension = Path.GetExtension(postedFile.FileName);
-                var fileName = Path.GetFileName(postedFile.FileName) + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Extension;
+                var fileName = Path.GetFileName(postedFile.FileName) + DateTime.Now.ToString("yyyyMMdd") + Extension;
 
                 //Saving file to Folder
                 var childSpan = _sentryHub.GetSpan()?.StartChild("additional-work");

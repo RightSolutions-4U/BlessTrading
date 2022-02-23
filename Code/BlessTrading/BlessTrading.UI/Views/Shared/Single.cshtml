@@ -1,0 +1,93 @@
+﻿@model IEnumerable<BlessTrading.Common.Models.Product>
+@{
+    ViewData["Title"] = "Detail Page";
+}
+<script>
+    function changeimage(imgfilename) {
+        var image = document.getElementById("productimage");
+        let src = imgfilename;
+        image.src = src.replace("~", "");
+        document.getElementById("productimage").focus();
+    }
+</script>
+<div class="banner-top">
+    <div class="container">
+        <h3>Products</h3>
+        <h4><a href="@Url.Action("Index","Home")">Home</a><label>/</label>Product Details</h4>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <br />
+    <div class="row">
+        <div class=" tab-content tab-content-t ">
+            <div class="tab-pane active text-style" id="tab1">
+                <div class=" con-w3l">
+                    <div class="col-md-5 span-2">
+
+                        @foreach (var p in item.ProductPictureMappings)
+                        {
+                            <img src="@Url.Content(p.Picture.FileName)" id="productimage" class="img-responsive" alt="">
+                            break;
+                        }
+                        <br />
+                        <div class="row">
+                            <div class="col-md-8 product-men women_two">
+                                <br />
+                                @foreach (var item1 in Model)
+                                {
+                                    @foreach (var p in item1.ProductPictureMappings)
+                                    {
+                                        <a href="#" onmouseover="changeimage('@p.Picture.FileName')"><img src='@Url.Content(p.Picture.FileName)' style="height:50px;width:50px;" class="img-fluid" alt=""></a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 span-1 ">
+                        <h3><b>@item.Name</b></h3>
+                        <p class="in-para">@item.ShortDescription</p>
+                        <div class="price_single">
+                            
+                            <span class="reducedfrom "><del>Rs.@((int)item.Price)</del> Rs.<em id="discount">@((int)item.Price- item.Discount)</em></span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <br />
+                        <h4 class="quick">Quick Overview:</h4>
+                        <br />
+                        <p class="quick_desc"> <label id="fdescription">@item.FullDescription</label></p>
+                        <br />
+                        <p>
+                            <h4 class="quick">Colors:</h4>
+                            <br />
+                            <input type="radio" id="Choice1"
+                                   name="contact" value="Brown" checked>
+                            <em for="contactChoice1">Brown</em>
+                            <input type="radio" id="Choice2"
+                                   name="contact" value="Green">
+                            <em for="contactChoice1">Green</em>
+                            <input type="radio" id="Choice3"
+                                   name="contact" value="Red">
+                            <em for="contactChoice1">Red</em>
+                            <input type="radio" id="Choice4"
+                                   name="contact" value="Violate">
+                            <em for="contactChoice1">Violate</em>
+
+                        </p>
+                        <div class="add-to">
+                            <br />
+                            <button class="btn btn-danger my-cart-btn my-cart-b " data-id="1" data-name="@item.Name" data-summary="summary 1" data-price="@((int)item.Price)" data-quantity="1" data-image="/images/of.png" onclick="location.href='@Url.Action("AddCart", "Carts", new { Id = @item.Id, Name = @item.Name, Price = @item.Price })'">Add to Cart</button>
+                            <button class="btn btn-danger my-cart-btn my-cart-b " onclick="history.back()">Back</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+}
+
+<script src="~/js/jquery-3.1.1.slim.min.js"></script>
