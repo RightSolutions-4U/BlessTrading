@@ -157,7 +157,7 @@ namespace BlessTrading.UI.Controllers
                 option.IsEssential = true;
                 Response.Cookies.Append("userid", a.Id.ToString(), option);
             }
-            Load load = new Load();
+            /*Load load = new Load();
             //Featured--field name MarkAsNew
             var clientF = new HttpClient();
             var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
@@ -188,8 +188,9 @@ namespace BlessTrading.UI.Controllers
                     ViewBag.message = "Invalid UserId or Password";
                     return View("~/Views/Shared/login.cshtml");
                 }
-            }
-                return View("../Home/Index", load);
+            }*/
+                return RedirectToAction("Index","Home");
+            /*return View("../Home/Index", load);*/
         }
         // GET: AccountController/Delete/5
         public async Task<ActionResult> Logout()

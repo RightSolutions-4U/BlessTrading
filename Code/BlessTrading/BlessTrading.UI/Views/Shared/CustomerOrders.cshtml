@@ -1,0 +1,51 @@
+﻿@using BlessTrading.Common.Models;
+@model VendorProduct
+@using System.Web.Helpers;
+@using GridMvc;
+
+<div class="banner-top">
+    <div class="container">
+        <h3>Order History</h3>
+        <h4><a href="@Url.Action(" Index","Home")">Home</a><label>/</label>Orders</h4>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class=" tab-content tab-content-t ">
+        <div class="tab-pane active text-style" id="tab1">
+            <div class=" con-w3l">
+                <div id="VendorOrders">
+                    <br />
+                    <h4>Orders</h4>
+                    <br />
+                    <div id="default" style="width:99%;align-self:center;align-content:center">
+                        @if (Model.CustOrderItems != null)
+                        {
+                        @Html.Grid(Model.CustOrderItems).Named("vendorOrder").Columns(columns =>
+                        {
+                        columns.Add(model => model.Name).Titled("ProductName");
+                        columns.Add(model => model.FileName).Titled("Image").Filterable(false).Encoded(false)
+                        .Sanitized(false)
+                        .SetWidth(40).RenderValueAs(model => @<img width="75" height="75" alt="Image" src='@Url.Content(model.FileName)'>);
+                        columns.Add(model => model.Price).Titled("UnitPrice");
+                        columns.Add(model => model.Quantity).Titled("Qauntity");
+                        columns.Add(model => model.IsAccepted).Titled("Accepted");
+                        @*columns.Add(model => model.ShipmentDate).Titled("ShipmentDate");*@
+                        @*columns.Add(model => model.AirWaybilNo).Titled("AirWaybilNo");*@
+                        columns.Add(model => model.RejectedReason).Titled("RejectedReason");
+                        })
+                        }
+                        else
+                        {
+                        <div>
+                            You did not place any orders
+                        </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

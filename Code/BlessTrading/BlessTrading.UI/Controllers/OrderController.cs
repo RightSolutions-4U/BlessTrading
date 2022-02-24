@@ -13,9 +13,35 @@ namespace BlessTrading.UI.Controllers
 {
     public class OrderController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult<OrderItem>> Index()
         {
-            return View();
+            if (Request.Cookies["userid"] != null)
+            {
+                VendorProduct vendorproduct = new VendorProduct();
+                var client1 = new HttpClient();
+                UriBuilder builderOrder = new UriBuilder("https://localhost:44340/api/OrderItems/GetCustomerOrderItems?");
+                builderOrder.Query = "custid=" + Request.Cookies["userid"];
+                HttpResponseMessage Orderresponse = await client1.GetAsync(builderOrder.Uri);
+                var Orderitems = Orderresponse.Content.ReadAsStringAsync().Result;
+                vendorproduct.CustOrderItems = JsonConvert.DeserializeObject<CustOrderItems[]>(Orderitems);
+
+                return View("CustomerOrders", vendorproduct);
+            }
+            else
+            {
+                if (HttpContext.Session.GetString("cart") != null)
+                {
+                    var value = HttpContext.Session.GetString("cart");
+                    List<Cart> li = JsonConvert.DeserializeObject<List<Cart>>(value);
+                    TempData["cartcount"] = li.Count();
+                }
+                else
+                {
+                    TempData["cartcount"] = 0;
+                }
+                
+                return RedirectToAction("Index","Home");
+            }
         }
 
         // GET: OrderController/Details/5
@@ -37,12 +63,14 @@ namespace BlessTrading.UI.Controllers
         {
             try
             {
-                if (collection["CardNumber"] != "6292400011276686")
+                string CC = "6292400011276686";
+                if (CC != "6292400011276686")
                 {
                     ViewBag.Message = "Payment rejected with Credit Card No. you supplied";
                     return View("Payment");
                 }
                 string ODate = collection["CardExpiration"];
+                /*string ODate = collection["CardExpiration"];*/
                 int TotalAmount = 0;
                 Random rnd = new Random();
                 Order order = new Order
@@ -74,8 +102,8 @@ namespace BlessTrading.UI.Controllers
                     CardType = collection["CardType"],
                     CardName = collection["CardName"],
                     CardCvv2 = collection["CardCvv2"],
-                    CardExpirationMonth = ODate.Substring(0, 2),
-                    CardExpirationYear = ODate.Substring(3),
+                    CardExpirationMonth = "1",
+                    CardExpirationYear = "22",
                     CardNumber = collection["CardNumber"],
                     BillingAddressId = 1106,
                     CreatedOnUtc = DateTime.UtcNow
@@ -83,7 +111,7 @@ namespace BlessTrading.UI.Controllers
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Clear();
                 /*client.BaseAddress = new Uri("https://localhost:44356/api/Orders/PostOrder");*/
-                client.BaseAddress = new Uri("https://localhost:44356/api/Orders/PostOrder");
+                client.BaseAddress = new Uri("https://localhost:44340/api/Orders/PostOrder");
                 string data = JsonConvert.SerializeObject(order);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 HttpResponseMessage Res = await client.PostAsync(client.BaseAddress, content);
@@ -117,8 +145,8 @@ namespace BlessTrading.UI.Controllers
                         };
                         var client1 = new HttpClient();
                         client1.DefaultRequestHeaders.Clear();
-                        /*client1.BaseAddress = new Uri("https://localhost:44356/api/OrderItems/PostOrderItem");*/
-                        client1.BaseAddress = new Uri("https://localhost:44356/api/OrderItems/PostOrderItem");
+                        /*client1.BaseAddress = new Uri("https://localhost:44340/api/OrderItems/PostOrderItem");*/
+                        client1.BaseAddress = new Uri("https://localhost:44340/api/OrderItems/PostOrderItem");
 
                         data = JsonConvert.SerializeObject(orderItem);
                         content = new StringContent(data, Encoding.UTF8, "application/json");

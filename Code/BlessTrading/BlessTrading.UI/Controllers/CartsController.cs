@@ -95,6 +95,7 @@ namespace BlessTrading.UI.Controllers
                     {
                         List<Cart> li = new List<Cart>(c);
                         HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(li));
+                        ViewBag.cartcount = li.Count();
                         return View("MyCart", li);
                     }
                 }//if not successful
@@ -113,7 +114,7 @@ namespace BlessTrading.UI.Controllers
                 err.ErrorMessage = "Sorry there are no items in your cart  ";
                 ViewBag.Error = err;
                 ViewBag.Cart = null;
-                TempData["cartcount"] = cartcount;
+                TempData["cartcount"] = 0;
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -125,6 +126,7 @@ namespace BlessTrading.UI.Controllers
                 {
                     var value = HttpContext.Session.GetString("cart");
                     List<Cart> li = JsonConvert.DeserializeObject<List<Cart>>(value);
+                    TempData["cartcount"] = li.Count();
                     return View("checkout", li);
                 }
                 else
@@ -138,6 +140,7 @@ namespace BlessTrading.UI.Controllers
                 TempData["Message"] = "Please login or register before checkout";
                 var value = HttpContext.Session.GetString("cart");
                 List<Cart> li = JsonConvert.DeserializeObject<List<Cart>>(value);
+                TempData["cartcount"] = li.Count();
                 return RedirectToAction("MyCart", "Carts", new { CustId = "", cartcount = li.Count() });
             }
         }

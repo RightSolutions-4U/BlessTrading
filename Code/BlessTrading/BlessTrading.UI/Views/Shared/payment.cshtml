@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="banner-top">
+    <div class="container">
+        <h3>Checkout</h3>
+        <h4><a href="@Url.Action("Index","Home")">Home</a><label>/</label>Checkout</h4>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal-body">
+        <div class="login_wrap">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="alert alert-info" role="alert">
+                        <h6>@ViewBag.Message</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -49,6 +49,25 @@ namespace BlessTrading.API.Controllers
             return orderItem;
         }
 
+        [HttpGet("GetCustomerOrderItems")]
+        public IEnumerable<CustOrderItems> GetCustomerOrderItems(int custid)
+        {
+            try
+            {
+                var orderItem = _context.CustOrderItems
+                    .FromSqlRaw("Execute dbo.GetCustomerOrderItems {0}", custid)
+                    .ToList();
+                if (orderItem == null)
+                {
+                    return null;
+                }
+                return orderItem;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
         // PUT: api/OrderItems/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -242,10 +261,17 @@ namespace BlessTrading.API.Controllers
         [HttpPost("PostOrderItem")]
         public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
         {
-            _context.OrderItems.Add(orderItem);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
+            try
+            {
+                _context.OrderItems.Add(orderItem);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+            
         }
 
         // DELETE: api/OrderItems/5
