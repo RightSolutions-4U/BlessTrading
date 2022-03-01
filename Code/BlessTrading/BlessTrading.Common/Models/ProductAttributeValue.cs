@@ -24,6 +24,6 @@ namespace BlessTrading.Common.Models
         public int DisplayOrder { get; set; }
         public int PictureId { get; set; }
 
-        public virtual ProductProductAttributeMapping ProductAttributeMapping { get; set; }
+        /*public virtual ProductProductAttributeMapping ProductAttributeMapping { get; set; }*/
     }
 }

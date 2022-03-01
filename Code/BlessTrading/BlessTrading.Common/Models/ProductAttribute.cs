@@ -10,7 +10,7 @@ namespace BlessTrading.Common.Models
         public ProductAttribute()
         {
             PredefinedProductAttributeValues = new HashSet<PredefinedProductAttributeValue>();
-            ProductProductAttributeMappings = new HashSet<ProductProductAttributeMapping>();
+            /*ProductProductAttributeMappings = new HashSet<ProductProductAttributeMapping>();*/
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace BlessTrading.Common.Models
         public string Description { get; set; }
 
         public virtual ICollection<PredefinedProductAttributeValue> PredefinedProductAttributeValues { get; set; }
-        public virtual ICollection<ProductProductAttributeMapping> ProductProductAttributeMappings { get; set; }
+        /*public virtual ICollection<ProductProductAttributeMapping> ProductProductAttributeMappings { get; set; }*/
     }
 }

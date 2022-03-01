@@ -1545,6 +1545,8 @@ namespace BlessTrading.Common.Models
 
                 entity.HasIndex(e => new { e.ProductAttributeMappingId, e.DisplayOrder }, "IX_ProductAttributeValue_ProductAttributeMappingId_DisplayOrder");
 
+
+
                 entity.Property(e => e.ColorSquaresRgb).HasMaxLength(100);
 
                 entity.Property(e => e.Cost)
@@ -1563,10 +1565,10 @@ namespace BlessTrading.Common.Models
                     .HasColumnType("decimal(18, 4)")
                     .HasAnnotation("Relational:ColumnType", "decimal(18, 4)");
 
-                entity.HasOne(d => d.ProductAttributeMapping)
+                /*entity.HasOne(d => d.ProductAttributeMapping)
                     .WithMany(p => p.ProductAttributeValues)
                     .HasForeignKey(d => d.ProductAttributeMappingId)
-                    .HasConstraintName("FK_ProductAttributeValue_ProductAttributeMappingId_Product_ProductAttribute_Mapping_Id");
+                    .HasConstraintName("FK_ProductAttributeValue_ProductAttributeMappingId_Product_ProductAttribute_Mapping_Id");*/
             });
 
             modelBuilder.Entity<ProductAvailabilityRange>(entity =>
@@ -1656,18 +1658,23 @@ namespace BlessTrading.Common.Models
                 entity.HasIndex(e => e.ProductAttributeId, "IX_Product_ProductAttribute_Mapping_ProductAttributeId");
 
                 entity.HasIndex(e => e.ProductId, "IX_Product_ProductAttribute_Mapping_ProductId");
+                
 
                 entity.HasIndex(e => new { e.ProductId, e.DisplayOrder }, "IX_Product_ProductAttribute_Mapping_ProductId_DisplayOrder");
-
-                entity.HasOne(d => d.ProductAttribute)
-                    .WithMany(p => p.ProductProductAttributeMappings)
-                    .HasForeignKey(d => d.ProductAttributeId)
-                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductAttributeId_ProductAttribute_Id");
-
-                //entity.HasOne(d => d.Product)
-                //    .WithMany(p => p.ProductProductAttributeMappings)
-                //    .HasForeignKey(d => d.ProductId)
-                //    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");
+                /*entity.HasOne(d => d.ProductAttribute)
+                    .WithMany(p => p.)
+                    .HasForeignKey(d => d.ProductAttributeMappingId)
+                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");*/
+                /*                entity.HasOne(d => d.ProductAttribute)
+                                    .WithMany(p => p.ProductProductAttributeMappings)
+                                    .HasForeignKey(d => d.ProductAttributeId)
+                                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductAttributeId_ProductAttribute_Id");
+                */                /*Removed comments on 26022022 by Mohtashim*/
+                /*                entity.HasOne(d => d.Product)
+                                    .WithMany(p => p.ProductProductAttributeMappings)
+                                    .HasForeignKey(d => d.ProductId)
+                                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");
+                */
             });
 
             modelBuilder.Entity<ProductProductTagMapping>(entity =>

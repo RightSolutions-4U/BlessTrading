@@ -26,7 +26,7 @@ namespace BlessTrading.UI.Controllers
             {
                 qry = qry + " and (p.Name like '%" + data["textsearch"] + "%' or p.ShortDescription like '%" + data["textsearch"] + "%' or p.FullDescription like '%" + data["textsearch"] + "%')";
             }
-            if (data["textsearch"] != "")
+            if (data["lstCategory"] != "" && data["lstCategory"]!="x")
             {
                 qry = qry + " and CategoryId=" + data["lstCategory"];
             }
@@ -44,6 +44,16 @@ namespace BlessTrading.UI.Controllers
             var myContent = JsonConvert.SerializeObject(product);
             try
             {
+                if (HttpContext.Session.GetString("cart") != null)
+                {
+                    var value = HttpContext.Session.GetString("cart");
+                    List<Cart> li = JsonConvert.DeserializeObject<List<Cart>>(value);
+                    ViewBag.cartcount = li.Count();
+                }
+                else
+                {
+                    ViewBag.cartcount = 0;
+                }
                 var data1 = new StringContent(myContent + qry, Encoding.UTF8, "application/json");
                 UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Products/SearchProducts?");
                 builderC.Query = "sql=" + qry;

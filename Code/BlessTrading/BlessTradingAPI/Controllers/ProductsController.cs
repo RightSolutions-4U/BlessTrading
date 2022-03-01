@@ -99,12 +99,23 @@ namespace BlessTrading.API.Controllers
         [HttpGet("GetProductDetail")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductDetail(int Id)
         {
-            var product =   await _context.Products.Where(a => a.Id == Id
+            try { 
+            var product =   await _context.
+                    Products.Where(a => a.Id == Id
                             )
                              .Include(a => a.ProductPictureMappings)
                              .ThenInclude(f => f.Picture)
+                             .Include(a => a.ProductProductAttributeMappings)
+                             .ThenInclude(g => g.ProductAttributeValues)
+                             .Include(a => a.ProductProductAttributeMappings)
+                             .ThenInclude(h => h.ProductAttributes)
                              .ToListAsync();
             return product;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         //added by SM on Nov 20, 2020
@@ -392,6 +403,14 @@ namespace BlessTrading.API.Controllers
                 var productExt = _context.productExts
                 .FromSqlRaw("Execute dbo.GetProductByMainCategory {0}", CatId)
                 .ToList();
+                /* var product = await _context.Products.OrderByDescending(a => a.MarkAsNew == true
+                                 )
+                                 .Where(a => a.Deleted == false && a.IsActive == true)
+                                 *//*.Include(a => a.ProductPictureMappings)
+                                     .ThenInclude(f => f.Picture).Take(4)*//*
+                                 .Include(a => a.ProductCategoryMappings)
+                                     .ThenInclude(g => g.Category.Where(h => h.ParentCategoryId == CatId))
+                                 .ToListAsync();*/
 
                 return productExt;
             }

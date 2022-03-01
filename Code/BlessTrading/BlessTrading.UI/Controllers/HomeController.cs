@@ -42,36 +42,46 @@ namespace BlessTrading.UI.Controllers
                 var clientC1 = new HttpClient();
                 UriBuilder builderC1 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
                 /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
-                builderC1.Query = "CatId=19";
+                builderC1.Query = "CatId=18";
                 HttpResponseMessage responseC1 = await clientC1.GetAsync(builderC1.Uri);
                 if (responseC1.IsSuccessStatusCode)
                 {
                     var MainCat1 = responseC1.Content.ReadAsStringAsync().Result;
-                    load.MainCat1 = JsonConvert.DeserializeObject<Product[]>(MainCat1);
+                    load.MainCat1 = JsonConvert.DeserializeObject<productExt[]>(MainCat1);
                 }
 
                 var clientC2 = new HttpClient();
                 UriBuilder builderC2 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
                 /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
-                builderC2.Query = "CatId=26";
+                builderC2.Query = "CatId=29";
                 HttpResponseMessage responseC2 = await clientC1.GetAsync(builderC2.Uri);
                 if (responseC2.IsSuccessStatusCode)
                 {
                     var MainCat2 = responseC2.Content.ReadAsStringAsync().Result;
-                    load.MainCat2 = JsonConvert.DeserializeObject<Product[]>(MainCat2);
+                    load.MainCat2 = JsonConvert.DeserializeObject<productExt[]>(MainCat2);
                 }
 
                 var clientC3 = new HttpClient();
                 UriBuilder builderC3 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
                 /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
-                builderC3.Query = "CatId=29";
+                builderC3.Query = "CatId=19";
                 HttpResponseMessage responseC3 = await clientC1.GetAsync(builderC3.Uri);
                 if (responseC3.IsSuccessStatusCode)
                 {
                     var MainCat3 = responseC3.Content.ReadAsStringAsync().Result;
-                    load.MainCat3 = JsonConvert.DeserializeObject<Product[]>(MainCat3);
+                    load.MainCat3 = JsonConvert.DeserializeObject<productExt[]>(MainCat3);
                 }
 
+                var clientC4 = new HttpClient();
+                UriBuilder builderC4 = new UriBuilder("https://localhost:44340/api/Products/GetProductsByMainCat?");
+                /*UriBuilder builderC = new UriBuilder("https://localhost:44356/api/Customers/LoginID?");*/
+                builderC4.Query = "CatId=26";
+                HttpResponseMessage responseC4 = await clientC1.GetAsync(builderC4.Uri);
+                if (responseC4.IsSuccessStatusCode)
+                {
+                    var MainCat4 = responseC4.Content.ReadAsStringAsync().Result;
+                    load.MainCat4 = JsonConvert.DeserializeObject<productExt[]>(MainCat4);
+                }
                 var clientN = new HttpClient();
                 var urlN = "https://localhost:44340/api/Products/GetNewProducts"; 
                  /*var urlN = env + "/api/Products/GetNewProducts";*/

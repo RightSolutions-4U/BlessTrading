@@ -13,7 +13,8 @@ namespace BlessTrading.Common.Models
         public bool IsFeaturedProduct { get; set; }
         public int DisplayOrder { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
+        /*public ICollection<Category> Categories { get; set; }*/
         //public virtual Product Product { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace BlessTrading.Common.Models
             //ProductManufacturerMappings = new HashSet<ProductManufacturerMapping>();
             //by SM on Nov 12, 2020 uncomment
             ProductPictureMappings = new HashSet<ProductPictureMapping>();
-            //ProductProductAttributeMappings = new HashSet<ProductProductAttributeMapping>();
+            ProductProductAttributeMappings = new HashSet<ProductProductAttributeMapping>();
             //ProductProductTagMappings = new HashSet<ProductProductTagMapping>();
             //ProductReviews = new HashSet<ProductReview>();
             //ProductSpecificationAttributeMappings = new HashSet<ProductSpecificationAttributeMapping>();
@@ -143,6 +143,7 @@ namespace BlessTrading.Common.Models
         //by SM on Nov 12, 2020
         public virtual ICollection<ProductPictureMapping> ProductPictureMappings { get; set; }
         public virtual ICollection<ProductCategoryMapping> ProductCategoryMappings { get; set; }
-
+        public virtual ICollection<ProductProductAttributeMapping> ProductProductAttributeMappings { get; set; }
+        
     }
 }

@@ -15,6 +15,16 @@ namespace BlessTrading.UI.Controllers
         public async Task<ActionResult<IEnumerable<productExt>>> Index(int CatId)
 
         {
+            if (HttpContext.Session.GetString("cart") != null)
+            {
+                var value = HttpContext.Session.GetString("cart");
+                List<Cart> li = JsonConvert.DeserializeObject<List<Cart>>(value);
+                ViewBag.cartcount = li.Count();
+            }
+            else
+            {
+                ViewBag.cartcount = 0;
+            }
             ProductCategory cat = new ProductCategory();
             var client = new HttpClient();
             var url = "https://localhost:44340/api/Products/GetCategory?CId=" + CatId;
@@ -29,6 +39,7 @@ namespace BlessTrading.UI.Controllers
             var responseF = await clientF.GetAsync(urlF);
             var ProductExts = responseF.Content.ReadAsStringAsync().Result;
             load.ProductExts = JsonConvert.DeserializeObject<productExt[]>(ProductExts);
+
             return View("ProductByCat1", load);
         }
     }

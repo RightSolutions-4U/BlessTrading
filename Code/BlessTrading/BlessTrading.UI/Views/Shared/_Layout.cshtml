@@ -29,6 +29,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         });
     </script>
+    <script>$(document).ready(function () {
+    var url = 'https://localhost:44340/api/Products/GetCategories';
+    var URL = url;
+    $.ajax({
+        url: URL,
+        type: 'GET',
+        success: function (result) {
+            var markup = "<option value='x'>Select Category</option>";
+            var i;
+            for (i = 0; i < result.length; i++) {
+                markup += "<option value=" + JSON.stringify(result[i].recId) + ">" + JSON.stringify(result[i].catName) + "</option>";
+            }
+            $("#lstCategory").html(markup).show();
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+        }
+    });
+        });
+        
+    </script>
     <!-- start-smoth-scrolling -->
     <link href="~/css/font-awesome.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -231,6 +253,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                                 @*<li><a href="codes.html" class="hyper"> <span>Codes</span></a></li>*@
                                 <li><a href="contact.html" class="hyper"><span>Contact Us</span></a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myModal2" class="hyper"><span>Search</span></a></li>
                             </ul>
                         </div>
                     </nav>
@@ -255,7 +278,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             @*<span class="fa fa-shopping-cart my-cart-icon"><span class="badge badge-notify my-cart-badge"></span></span>*@
                             <label for="interest_inet" id="label-interest1">@ViewBag.cartcount</label>
                         </a>
-</div>
+                    </div>
                     
                     @*<div class="search-form">
             <form action="#" method="post">
@@ -263,12 +286,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <input type="submit" value=" ">
             </form>
         </div>*@
-                    <div class="border border-danger">
+@*                    <div class="border border-danger">
                         <span>
                             <img src="~/images/search2.jpg" style="width:130px;height:50px" data-toggle="modal" data-target="#myModal2" />
                         </span>
                     </div>
-                    <div class="clearfix"></div>
+*@                    <div class="clearfix"></div>
                 </div>
 
             </div>
@@ -442,7 +465,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                         <div class="row">
                                                             <div class="col-12 con-left">
                                                                 <div class="form-group">
-                                                                    <input class="form-control" type="text" name="textsearch" placeholder="Text Search" required="">
+                                                                    <input class="form-control" type="text" name="textsearch" placeholder="Text Search">
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 con-left">
@@ -455,12 +478,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                             </div>
                                                             <div class="col-md-4 con-left col-xs-4">
                                                                 <div class="form-group">
-                                                                    <input class="form-control" type="text" name="PriceFrom" id="PriceFrom" placeholder="PriceFrom" required="">
+                                                                    <input class="form-control" type="text" name="PriceFrom" id="PriceFrom" placeholder="PriceFrom">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4 con-left col-xs-4">
                                                                 <div class="form-group">
-                                                                    <input class="form-control" type="text" name="PriceTo" id="PriceTo" placeholder="PriceTo" required="">
+                                                                    <input class="form-control" type="text" name="PriceTo" id="PriceTo" placeholder="PriceTo">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 con-left">

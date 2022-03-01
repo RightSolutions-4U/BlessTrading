@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -10,6 +11,7 @@ namespace BlessTrading.Common.Models
         public ProductProductAttributeMapping()
         {
             ProductAttributeValues = new HashSet<ProductAttributeValue>();
+            ProductAttributes = new HashSet<ProductAttribute>();
         }
 
         public int Id { get; set; }
@@ -26,8 +28,11 @@ namespace BlessTrading.Common.Models
         public string DefaultValue { get; set; }
         public string ConditionAttributeXml { get; set; }
 
-        public virtual Product Product { get; set; }
-        public virtual ProductAttribute ProductAttribute { get; set; }
+        /*public virtual Product Product { get; set; }*/
+        /*public virtual ProductAttribute ProductAttribute { get; set; }*/
+        [ForeignKey("ProductAttributeMappingId")]
         public virtual ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
+        [ForeignKey("Id")]
+        public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
     }
 }

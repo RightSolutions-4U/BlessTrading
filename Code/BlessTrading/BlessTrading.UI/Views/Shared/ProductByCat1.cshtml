@@ -58,7 +58,7 @@
                     <div class="col-md-3 m-wthree">
                         <div class="col-m">
                             <a href="#" id="myimage" class="offer-img" name="myimage" data-imageurl="@i.FileName" data-toggle="modal" data-target="#myModal1" data-name1="@i.Name" data-sdescription="@i.ShortDescription" data-fdescription="@i.FullDescription" data-price="@i.Price" data-discount="@i.Discount">
-                                <img src="@Url.Content(i.FileName)" class="img-fluid" alt="">
+                                <img src="@Url.Content(i.FileName)" class="img-fluid" alt="" style="width:200px;height:200px">
                             </a>
 
                             <div class="offer"><p><span>Offer</span></p></div>
@@ -67,7 +67,7 @@
                                     <h6><a href="single.html">@i.Name</a></h6>
                                 </div>
                                 <div class="mid-2">
-                                    <p><label>@i.Price</label><em class="item_price">@i.Discount</em></p>
+                                    <p><del>@((int)i.Price)</del><em class="item_price"> @((int)i.Price - i.Discount)</em></p>
                                     <div class="block">
                                         <div class="starbox small ghosting"> </div>
                                     </div>
@@ -80,7 +80,9 @@
 
                             </div>
                         </div>
+                        <br />
                     </div>
+                    
                 }
                 <div class="clearfix"></div>
             </div>
