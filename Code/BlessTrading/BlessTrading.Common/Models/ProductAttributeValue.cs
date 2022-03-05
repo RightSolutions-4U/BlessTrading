@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -11,6 +12,7 @@ namespace BlessTrading.Common.Models
         public string Name { get; set; }
         public string ColorSquaresRgb { get; set; }
         public int ProductAttributeMappingId { get; set; }
+        public int ProductAttributeId { get; set; }
         public int AttributeValueTypeId { get; set; }
         public int AssociatedProductId { get; set; }
         public int ImageSquaresPictureId { get; set; }
@@ -23,7 +25,8 @@ namespace BlessTrading.Common.Models
         public bool IsPreSelected { get; set; }
         public int DisplayOrder { get; set; }
         public int PictureId { get; set; }
-
+        [ForeignKey("ProductAttributeId")]
+        public virtual ProductAttribute ProductAttributes { get; set; }
         /*public virtual ProductProductAttributeMapping ProductAttributeMapping { get; set; }*/
     }
 }

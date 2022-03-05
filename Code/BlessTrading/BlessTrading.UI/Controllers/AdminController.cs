@@ -40,14 +40,41 @@ namespace BlessTrading.UI.Controllers
                 }
                 ViewBag.UserId = a.UserId;
                 ViewBag.env = env;
+                /*if (HttpContext.Session.GetString("AdminUserId") == null)
+                {*/
+                HttpContext.Session.SetString("AdminUserId", a.RecId.ToString());
+                /*}*/
                 return View("Admin/AdminMain");
             }
-            catch(Exception e )
+            catch (Exception e)
             {
                 ViewBag.msg = "Invalid UserId or Password with ENV" + env;
                 return View("Admin/AdminLogin");
             }
 
+        }
+        public async Task<ActionResult<Vendor>> CustomerOrders()
+        {
+            try
+            {
+                var value = HttpContext.Session.GetString("AdminUserId");
+                VendorProduct vendorproduct = new VendorProduct();
+
+                var client1 = new HttpClient();
+                //Load order items of the vendor
+                UriBuilder builderOrder = new UriBuilder("https://localhost:44340/api/Vendors/GetOrderitemsByVendor?");
+                builderOrder.Query = "VendorId=" + Int64.Parse(value);
+                HttpResponseMessage Orderresponse = await client1.GetAsync(builderOrder.Uri);
+                var Orderitems = Orderresponse.Content.ReadAsStringAsync().Result;
+                vendorproduct.CustOrderItems = JsonConvert.DeserializeObject<CustOrderItems[]>(Orderitems);
+
+                return View("../Shared/Admin/VendorOrders", vendorproduct);
+            }
+            catch (Exception e)
+            {
+                ViewBag.msg = "Error occured";
+                return View("Admin/AdminLogin");
+            }
         }
     }
 }

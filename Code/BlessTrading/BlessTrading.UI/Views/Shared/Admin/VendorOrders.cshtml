@@ -1,0 +1,362 @@
+﻿@using BlessTrading.Common.Models
+@model VendorProduct
+@using System.Web.Helpers;
+@using GridMvc;
+
+@{
+Layout = "";
+}
+<html lang="en">
+<head>
+    <title>Admin - Bless Trading</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">*@
+    @*</script>*@
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Bless Trading</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <p class="font-weight-bold"><a href="#">Categories</a></p>
+                <p class="font-weight-bold"><a href="#" onclick="@Url.Action("Index","Admin")">Products</a></p>
+                <p class="font-weight-bold"><a href="#" onclick="@Url.Action("CustomerOrders","Admin")">Order Management</a></p>
+            </div>
+
+            <div class="col-sm-8 text-left">
+                <h1>Welcome back @ViewBag.UserId</h1>
+                <hr />
+                <div class="container">
+                    <div class="col-sm-10 text-left">
+                        <div id="VendorOrders">
+                            <br />
+                            <h4>Orders</h4>
+                            <br />
+                            <div id="default" style="width:99%;align-self:center;align-content:center">
+                                @if (Model.CustOrderItems != null)
+                                {
+                                    @Html.Grid(Model.CustOrderItems).Named("vendorOrder").Columns(columns =>
+                                {
+                                columns.Add(model => model.OrderId).Titled("RecId");
+                                columns.Add(model => model.Name).Titled("ProductName");
+                                columns.Add(model => model.FileName).Titled("Image").Filterable(false).Encoded(false)
+                                .Sanitized(false)
+                                .SetWidth(40).RenderValueAs(model => @<img width="75" height="75" alt="Image" src='@Url.Content(model.FileName)'>);
+columns.Add(model => model.Price).Titled("UnitPrice");
+columns.Add(model => model.Quantity).Titled("Qauntity");
+columns.Add(model => model.IsAccepted).Titled("Accepted");
+columns.Add(model => model.ShipmentDate).Titled("ShipmentDate");
+columns.Add(model => model.AirWaybilNo).Titled("AirWaybilNo");
+columns.Add(model => model.RejectedReason).Titled("RejectedReason");
+columns.Add()
+.Encoded(false)
+.Sanitized(false)
+.SetWidth(40)
+.RenderValueAs(o => @<a href="#" data-toggle="modal" data-target="#ModalAcceptForm" data-id="@o.OrderId"><img src="~/images/accept.png" width="20" height="20" /></a>);
+columns.Add()
+.Encoded(false)
+.Sanitized(false)
+.SetWidth(80)
+.RenderValueAs(o => @<a href="#" data-toggle="modal" data-target="#ModalRejectForm" data-id="@o.OrderId" data-Oid="@o.OrderId"><img src="~/images/reject.png" width="20" height="20" /></a>);
+columns.Add()
+.Encoded(false)
+.Sanitized(false)
+.SetWidth(80)
+.RenderValueAs(o => @<a href="#" data-toggle="modal" data-target="#ModalUpload" data-id="@o.OrderId"><img src="~/images/upload.png" width="20" height="20" /></a>);
+})
+                                }
+                                else
+                                {
+                                    <div>
+                                        No orders yet
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ModalAcceptForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Accept Order</h1>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="">
+                        <input type="hidden" name="orderitemid" id="orderitemid" value="">
+                        <input type="hidden" name="orderid" id="orderid" value="">
+                        <div class="form-group">
+                            <label class="control-label">Please enter ETA for shipment</label>
+                            <div>
+                                <input type="text" class="form-control input-lg" name="ETA" id="ETA" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="button" class="btn btn-success" onclick="accept();">Save</button>
+                                <button type="button" class="btn btn-close" onclick="Aclose();">Close</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <div id="ModalRejectForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Reject Order</h1>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="">
+                        <input type="hidden" name="orderitemidr" id="orderitemidr" value="">
+                        <div class="form-group">
+                            <label class="control-label">Reason</label>
+                            <div>
+                                <input type="text" class="form-control input-lg" name="reason" id="reason" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="button" class="btn btn-success" onclick="reject();">Save</button>
+                                <button type="button" class="btn btn-close" onclick="rclose();">Close</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="ModalUpload" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Upload Invoice</h1>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="">
+                        <input type="hidden" name="orderitemidu" id="orderitemidu" value="">
+                        <div class="form-group">
+                            <label class="control-label">Shipment Date</label>
+                            <div>
+                                <input type="text" class="form-control input-lg" name="ShipmentDate" id="ShipmentDate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Airwaybill No.</label>
+                            <div>
+                                <input type="text" class="form-control input-lg" name="AirwaybillNo" id="AirwaybillNo" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Upload Invoice</label>
+                            <div>
+                                <div id="PicUploadI" class="border border-warning" style="width:90%;align-self:center;align-content:center">
+                                    <div class="col-md-6 con-left">
+                                    </div>
+                                    <span>Select File:</span>
+                                    <input type="file" name="myfilesU" id="myfilesU" />
+                                    @*<input type="button" value="Upload" onclick="PostPictureI(myfilesI)" />*@
+                                    <br />
+
+
+                                    <script>
+                                        function PostInvoice(inputId) {
+                                            var OIId = $("#orderitemidu").val();
+                                            var OAirWaybilNo = $("#AirwaybillNo").val();
+                                            var OShipmentDate = $("#ShipmentDate").val();
+                                            var input = $('#myfilesU').get(0).files;
+                                            var formData = new FormData();
+                                            var OrderItemId = $('#OrderItemId').val();// for pic prod mapping
+                                            for (var i = 0; i <= input.length; i++) {
+                                                formData.append("file", input[i]);
+                                            }
+                                            formData.append("Id", OIId);
+                                            formData.append("AirWaybilNo", OAirWaybilNo);
+                                            formData.append("ShipmentDate", OShipmentDate);
+
+                                            $.ajax({
+                                                url: 'https://localhost:44356/api/OrderItems/PostInvoice',
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                                success: function (result) {
+                                                    alert("Order has been added"); //this message coming now
+
+                                                    location.reload();
+                                                }
+                                                , error: function (result) {
+                                                    alert("err " + result.responseText);
+                                                }
+                                            })
+                                        }
+                                    </script>
+                                    <div class="col-md-6 con-left">
+                                        &nbsp;
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="button" class="btn btn-success" onclick="PostInvoice();">Save</button>
+                                <button type="button" class="btn btn-close" onclick="Uclose();">Close</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script>
+        function accept() {
+
+            var OIId = parseInt($("#orderitemid").val());
+            @*var OId = parseInt($("#orderid").val());*@
+                                        var OETA = parseInt($("#ETA").val());
+            if (OETA > 21) {
+                alert('ETA can not be more then 21 days');
+            }
+            else {
+                var orderitem = {
+                    id: OIId,
+                    IsAccepted: true,
+                    ETA: OETA
+                }
+                $.ajax({
+                    url: 'https://localhost:44356/api/OrderItems/PutOrderItemAccept',
+                    type: 'PUT',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(orderitem),
+                    success: function (result) {
+                        alert(" Order accepted ");
+                        @*if (result.order)
+                            $.ajax({
+                                url: 'https://localhost:44356/Order/SendEmail',
+                                type: 'GET',
+                                data: { id: productid },
+                                success: function (data) {
+                                    alert("GetProductPics before");
+                                    var trHTML = '';
+                                    var path = window.location.origin;
+                                    var tablePicE = $('#tblpicE tbody');
+                                    $.each(data, function (i, item) {
+                                        alert(item.seoFilename);
+                                        tablePicE.append('<tr><td align="center">' + item.id + '</td><td align="center"><img src=' + path + '/ProductImages/' + item.seoFilename + ' height = "75" width = "75" ></td><td align="center">' + item.productId + '</td><td align="center"><a href="#" onClick=delpicE(' + item.id + ' )><img src=' + path + '/Images/delicon.png height = "25" width = "25" ></a></td></tr>');
+                                    });
+                                    alert("GetProductPics after");
+
+                                }
+                                , error: function (result) {
+                                    alert("err " + result.responseText);
+                                }
+                            }) *@
+                            location.reload();
+                    }
+                    , error: function (result) {
+                        alert("err " + result.responseText);
+                    }
+                })
+            }
+        }
+        function reject() {
+
+            var OIId = parseInt($("#orderitemidr").val());
+            @*var OId = parseInt($("#orderid").val());*@
+                                         var RReason = $("#reason").val();
+
+            var orderitem = {
+                id: OIId,
+                IsAccepted: false,
+                RejectedReason: RReason
+            }
+            $.ajax({
+                url: 'https://localhost:44356/api/OrderItems/PutOrderItemReject',
+                type: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(orderitem),
+                success: function (result) {
+                    alert(" Order accepted ");
+                    location.reload();
+                }
+                , error: function (result) {
+                    alert("err " + result.responseText);
+                }
+            })
+        }
+        function Aclose() {
+            $("#ModalAcceptForm").modal("hide");
+        }
+        function Uclose() {
+            $("#ModalUpload").modal("hide");
+        }
+        function rclose() {
+            $("#ModalRejectForm").modal("hide");
+        }
+    </script>
+    <footer class="container-fluid text-center">
+        <p>Bless Trading Admin</p>
+    </footer>
+
+</body>
+</html>
+

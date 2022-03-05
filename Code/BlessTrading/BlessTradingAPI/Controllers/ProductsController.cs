@@ -99,18 +99,16 @@ namespace BlessTrading.API.Controllers
         [HttpGet("GetProductDetail")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductDetail(int Id)
         {
-            try { 
-            var product =   await _context.
-                    Products.Where(a => a.Id == Id
-                            )
-                             .Include(a => a.ProductPictureMappings)
-                             .ThenInclude(f => f.Picture)
-                             .Include(a => a.ProductProductAttributeMappings)
-                             .ThenInclude(g => g.ProductAttributeValues)
-                             .Include(a => a.ProductProductAttributeMappings)
-                             .ThenInclude(h => h.ProductAttributes)
-                             .ToListAsync();
-            return product;
+            try {
+                var product = await _context.Products
+                                             .Where(a => a.Id == Id)
+                                             .Include(a => a.ProductPictureMappings)
+                                             .ThenInclude(f => f.Picture)
+                                             .Include(g => g.ProductProductAttributeMappings)
+                                                .ThenInclude(h => h.ProductAttributeValues)
+                                                .ThenInclude(f => f.ProductAttributes)
+                                             .ToListAsync();
+                return product;
             }
             catch(Exception e)
             {

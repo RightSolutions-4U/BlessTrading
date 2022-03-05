@@ -11,7 +11,7 @@ namespace BlessTrading.Common.Models
         public ProductProductAttributeMapping()
         {
             ProductAttributeValues = new HashSet<ProductAttributeValue>();
-            ProductAttributes = new HashSet<ProductAttribute>();
+           /* ProductAttributes = new HashSet<ProductAttribute>();*/
         }
 
         public int Id { get; set; }
@@ -32,7 +32,7 @@ namespace BlessTrading.Common.Models
         /*public virtual ProductAttribute ProductAttribute { get; set; }*/
         [ForeignKey("ProductAttributeMappingId")]
         public virtual ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
-        [ForeignKey("Id")]
-        public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
+        ///[ForeignKey("ProductAttributeId")]
+/*        public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }*/
     }
 }

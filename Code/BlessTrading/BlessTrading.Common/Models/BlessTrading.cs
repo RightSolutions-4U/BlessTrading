@@ -1660,22 +1660,18 @@ namespace BlessTrading.Common.Models
                 entity.HasIndex(e => e.ProductId, "IX_Product_ProductAttribute_Mapping_ProductId");
                 
 
-                entity.HasIndex(e => new { e.ProductId, e.DisplayOrder }, "IX_Product_ProductAttribute_Mapping_ProductId_DisplayOrder");
-                /*entity.HasOne(d => d.ProductAttribute)
-                    .WithMany(p => p.)
-                    .HasForeignKey(d => d.ProductAttributeMappingId)
-                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");*/
-                /*                entity.HasOne(d => d.ProductAttribute)
-                                    .WithMany(p => p.ProductProductAttributeMappings)
+/*                entity.HasIndex(e => new { e.ProductId, e.DisplayOrder }, "IX_Product_ProductAttribute_Mapping_ProductId_DisplayOrder");
+                                entity.HasOne(d => d.ProductAttributes)
+                                    .WithMany()
                                     .HasForeignKey(d => d.ProductAttributeId)
                                     .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductAttributeId_ProductAttribute_Id");
-                */                /*Removed comments on 26022022 by Mohtashim*/
-                /*                entity.HasOne(d => d.Product)
-                                    .WithMany(p => p.ProductProductAttributeMappings)
-                                    .HasForeignKey(d => d.ProductId)
-                                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");
-                */
-            });
+*/                /*Removed comments on 26022022 by Mohtashim*/
+/*                entity.HasOne(d => d.ProductAttributeValues)
+                    .WithMany()
+                    .HasForeignKey(d => d.Id)
+                    .HasConstraintName("FK_Product_ProductAttribute_Mapping_ProductId_Product_Id");
+
+            });*/
 
             modelBuilder.Entity<ProductProductTagMapping>(entity =>
             {
@@ -2381,8 +2377,8 @@ namespace BlessTrading.Common.Models
                 //   .WithMany(p => p.VendorBankDetail)
                 //   .HasForeignKey(d => d.VendorId)
                 //   .HasConstraintName("FK__VendorBan__Vendo__1F2E9E6D");
+            });//
             });
-            //});
 
             modelBuilder.Entity<VendorNote>(entity =>
             {

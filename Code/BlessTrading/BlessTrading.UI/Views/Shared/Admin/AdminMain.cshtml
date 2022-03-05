@@ -198,8 +198,8 @@
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <p class="font-weight-bold"><a href="#">Categories</a></p>
-                <p class="font-weight-bold"><a href="#" onclick="PopCategories();">Products</a></p>
-                <p class="font-weight-bold"><a href="#">Order Management</a></p>
+                <p class="font-weight-bold"><a href="@Url.Action("Index","Admin")">Products</a></p>
+                <p class="font-weight-bold"><a href="@Url.Action("CustomerOrders","Admin")">Order Management</a></p>
             </div>
 
             <div class="col-sm-8 text-left">
@@ -312,10 +312,10 @@
                                             </div>
                                             <div class="form-group" style="text-align:left">
                                                 @*                                                <table>
-                                                    <tr>
-                                                        <td><label class="my-2">Active</label></td>
-                                                        <td><input type="checkbox" align="right" name="IsActive" id="IsActive" placeholder="" required="" style="width:500px;" checked></td>
-                                                    </tr>
+                                <tr>
+                                    <td><label class="my-2">Active</label></td>
+                                    <td><input type="checkbox" align="right" name="IsActive" id="IsActive" placeholder="" required="" style="width:500px;" checked></td>
+                                </tr>
                                                 *@                                                    <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked>
                                                     <label class="form-check-label" for="exampleCheck1">Active</label>
@@ -808,6 +808,7 @@
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
             </div>

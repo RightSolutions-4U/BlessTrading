@@ -10,8 +10,9 @@
         document.getElementById("productimage").focus();
     }
 </script>
+<br />
 <div class="banner-top">
-    <div class="container">
+    <div class="container align-self-center" style="width:98%">
         <h3>Products</h3>
         <h4><a href="@Url.Action("Index","Home")">Home</a><label>/</label>Product Details</h4>
         <div class="clearfix"> </div>
@@ -60,21 +61,45 @@
                         <p class="quick_desc"> <label id="fdescription">@item.FullDescription</label></p>
                         <br />
                         <p>
-                            <h4 class="quick">Colors:</h4>
-                            <br />
-                            <input type="radio" id="Choice1"
-                                   name="contact" value="Brown" checked>
-                            <em for="contactChoice1">Brown</em>
-                            <input type="radio" id="Choice2"
-                                   name="contact" value="Green">
-                            <em for="contactChoice1">Green</em>
-                            <input type="radio" id="Choice3"
-                                   name="contact" value="Red">
-                            <em for="contactChoice1">Red</em>
-                            <input type="radio" id="Choice4"
-                                   name="contact" value="Violate">
-                            <em for="contactChoice1">Violate</em>
+                            @{Int32 PrevAtt = 0;}
+                            @{Int32 Att = 0;}
 
+                            @foreach (var p1 in Model)
+                            {
+                                @foreach (var attmap in p1.ProductProductAttributeMappings)
+                                {
+                                    @foreach (var attval in attmap.ProductAttributeValues)
+                                    {
+                                        Att = attval.ProductAttributeId;
+
+                                        @if (Att != PrevAtt)
+                                        {
+                                            <h4 class="quick">@attval.ProductAttributes.Name</h4>
+                                            <br />
+                                            @foreach (var attval2 in attmap.ProductAttributeValues)
+                                            {
+                                                <input type="radio" id="Choice1"
+                                                       name="contact" value="@attval2.Name" checked>
+                                                @attval2.Name
+                                            }
+                                        }
+                                        PrevAtt = Att;
+
+                                    }
+                                }
+                                <input type="radio" id="Choice1"
+                                       name="contact" value="Brown" checked>
+                                <em for="contactChoice1">Brown</em>
+                                <input type="radio" id="Choice2"
+                                       name="contact" value="Green">
+                                <em for="contactChoice1">Green</em>
+                                <input type="radio" id="Choice3"
+                                       name="contact" value="Red">
+                                <em for="contactChoice1">Red</em>
+                                <input type="radio" id="Choice4"
+                                       name="contact" value="Violate">
+                                <em for="contactChoice1">Violate</em>
+                            }
                         </p>
                         <div class="add-to">
                             <br />
