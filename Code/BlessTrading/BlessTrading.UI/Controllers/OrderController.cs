@@ -127,6 +127,17 @@ namespace BlessTrading.UI.Controllers
                     {
                         var price = li[j].Price;
                         var name = li[j].Name;
+                        var PID = li[j].Id;
+                        var clientA = new HttpClient();
+                        //Load order items of the vendor
+                        UriBuilder builderA = new UriBuilder("https://localhost:44340/api/Attribute/GetProductAttribute?");
+                        builderA.Query = "ProductId=" + PID;
+                        HttpResponseMessage Aresponse = await clientA.GetAsync(builderA.Uri);
+                        var ProductAttributes = Aresponse.Content.ReadAsStringAsync().Result;
+                        var productattribute = JsonConvert.DeserializeObject<ProductAttribute[]>(ProductAttributes);
+                        /*Added by Mohtashim on 07032022*/
+                        /*Create Product Attributes XML*/
+                        System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(productattribute.GetType());
                         OrderItem orderItem = new OrderItem
                         {
                             OrderId = a.Id,
@@ -135,6 +146,7 @@ namespace BlessTrading.UI.Controllers
                             Quantity = 1,
                             UnitPriceInclTax = li[j].Price,
                             UnitPriceExclTax = li[j].Price,
+                            AttributesXml = x.ToString(),
                             PriceInclTax = li[j].Price,
                             PriceExclTax = li[j].Price,
                             DiscountAmountInclTax = 0,

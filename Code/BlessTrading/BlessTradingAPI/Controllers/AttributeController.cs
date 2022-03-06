@@ -23,22 +23,19 @@ namespace BlessTradingAPI.Controllers
 
         // GET: api/Attribute/ProductId
         [HttpGet("GetProductAttribute")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductAttribute(int ProductId)
+        public async Task<ActionResult<IEnumerable<ProductAttribute>>> GetProductAttribute(int ProductId)
         {
             try
             {
-                var product = await _context.Products
-                             .Where(a => a.Id == ProductId)
-                             .Include(g => g.ProductProductAttributeMappings)
-                                .ThenInclude(h => h.ProductAttributeValues)
-                                .ThenInclude(f => f.ProductAttributes)
-                             .ToListAsync();
-                return product;
+                var attribute = _context.ProductAttributes
+                .FromSqlRaw("Execute dbo.GetProductAttributes  {0}", ProductId)
+                .ToList();
+                return attribute;
             }
             catch (Exception e)
             {
+                /*incase of no category*/
                 return null;
-
             }
         }
     }
