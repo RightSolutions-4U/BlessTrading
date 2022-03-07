@@ -13,6 +13,7 @@ namespace BlessTrading.Common.Models
         public decimal Price { get; set; }
         public decimal Total { get; set; }
         public int count { get; set; }
+        public string Attributes { get; set; }
 
     }
 }

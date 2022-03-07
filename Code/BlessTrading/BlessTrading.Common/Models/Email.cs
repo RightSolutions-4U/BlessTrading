@@ -11,25 +11,34 @@ namespace BlessTrading.Common.Models
     {
         public void Send(string email, string subject, string body, string bcs)
         {
-            MailMessage message = new MailMessage();
-            /*message.From = new MailAddress("info@desiclothingonline.com");*/
-            message.From = new MailAddress("infodesiclothingonline@gmail.com");
-            message.To.Add(email);
-            message.Bcc.Add("info@desiclothingonline.com");
-            message.Subject = subject;
-
-            message.Body = body;
-            message.IsBodyHtml = true;
-            var client = new SmtpClient
+            try
             {
-                Host = "win10.tmd.cloud",
-                Port = 465,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(message.From.ToString(), "Need4speed!@")
-            };
-            client.Send(message);
+                MailMessage message = new MailMessage();
+                /*message.From = new MailAddress("info@desiclothingonline.com");*/
+                message.From = new MailAddress("info@blesstrading.net");
+                message.To.Add(email);
+                message.Bcc.Add("info@blesstrading.net");
+                message.Subject = subject;
+
+                message.Body = body;
+                message.IsBodyHtml = true;
+                var client = new SmtpClient
+                {
+                    /*Host = "win10.tmd.cloud",*/
+                    Host = "hgws10.win.hostgator.com",
+
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(message.From.ToString(), "Mohtashim098@")
+                };
+                client.Send(message);
+            }
+            catch(Exception e)
+            {
+
+            }
             //string SMTP = "";
             //string BCC = "";
             //string EmailFrom = "";

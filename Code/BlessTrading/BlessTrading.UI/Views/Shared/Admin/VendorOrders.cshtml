@@ -81,22 +81,21 @@ Layout = "";
                                 {
                                     @Html.Grid(Model.CustOrderItems).Named("vendorOrder").Columns(columns =>
                                 {
-                                columns.Add(model => model.OrderId).Titled("RecId");
                                 columns.Add(model => model.Name).Titled("ProductName");
                                 columns.Add(model => model.FileName).Titled("Image").Filterable(false).Encoded(false)
                                 .Sanitized(false)
                                 .SetWidth(40).RenderValueAs(model => @<img width="75" height="75" alt="Image" src='@Url.Content(model.FileName)'>);
-columns.Add(model => model.Price).Titled("UnitPrice");
-columns.Add(model => model.Quantity).Titled("Qauntity");
-columns.Add(model => model.IsAccepted).Titled("Accepted");
-columns.Add(model => model.ShipmentDate).Titled("ShipmentDate");
-columns.Add(model => model.AirWaybilNo).Titled("AirWaybilNo");
-columns.Add(model => model.RejectedReason).Titled("RejectedReason");
-columns.Add()
-.Encoded(false)
-.Sanitized(false)
-.SetWidth(40)
-.RenderValueAs(o => @<a href="#" data-toggle="modal" data-target="#ModalAcceptForm" data-id="@o.OrderId"><img src="~/images/accept.png" width="20" height="20" /></a>);
+                                columns.Add(model => model.Price).Titled("UnitPrice");
+                                columns.Add(model => model.Quantity).Titled("Qauntity");
+                                columns.Add(model => model.IsAccepted).Titled("Accepted");
+                                columns.Add(model => model.ShipmentDate).Titled("ShipmentDate");
+                                columns.Add(model => model.AirWaybilNo).Titled("AirWaybilNo");
+                                columns.Add(model => model.RejectedReason).Titled("RejectedReason");
+                                columns.Add()
+                                .Encoded(false)
+                                .Sanitized(false)
+                                .SetWidth(40)
+                                .RenderValueAs(o => @<a href="#" data-toggle="modal" data-target="#ModalAcceptForm" data-id="@o.OrderId"><img src="~/images/accept.png" width="20" height="20" /></a>);
 columns.Add()
 .Encoded(false)
 .Sanitized(false)

@@ -11,6 +11,20 @@ You can login to our billing system at https://portal.hostgator.com/login, using
     1st Nameserver:     ns19.win.hostgator.com
     2nd Nameserver:     ns20.win.hostgator.com
     Server IP:          192.185.6.99
+
+39344292
+Please use 
+Incoming Server:  hgws10.win.hostgator.com
+Without SSL:
+IMAP Port: 143 POP3 Port: 110
+With SSL
+IMAP Port: 993 POP3 Port: 995
+Outgoing Server:    hgws10.win.hostgator.com
+Without SSL - SMTP Port: 587, 25
+With SSL - SMTP Port: 465
+IMAP, POP3, and SMTP require authentication.
+
+
 https://test.blesstrading.net/Admin/CheckAdminLogin
 
 DB user

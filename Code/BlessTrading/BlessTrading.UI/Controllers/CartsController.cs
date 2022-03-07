@@ -18,13 +18,15 @@ namespace BlessTrading.UI.Controllers
             return View();
         }
         //Added by SM on Nov 25, 2020 for cart
-        public ActionResult AddCart(int Id, string Name, decimal Price)
+        /*public ActionResult AddCart(int Id, string Name, decimal Price)*/
+        public ActionResult AddCart(IFormCollection collection)
         {
             Cart cart = new Cart
             {
-                Id = Id,
-                Name = Name,
-                Price = Price
+                Id = Convert.ToInt32(collection["Id"]),
+                Name = collection["Name"],
+                Price = Convert.ToDecimal(collection["Price"]),
+                Attributes = collection["txtattributes"]
             };
             if (HttpContext.Session.GetString("cart") == null)
             {

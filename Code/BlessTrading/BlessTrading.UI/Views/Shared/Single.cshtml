@@ -26,6 +26,7 @@
         <div class=" tab-content tab-content-t ">
             <div class="tab-pane active text-style" id="tab1">
                 <div class=" con-w3l">
+                    <form name="frmsingle" method="post" action="@Url.Action("AddCart", "Carts")">
                     <div class="col-md-5 span-2">
 
                         @foreach (var p in item.ProductPictureMappings)
@@ -48,7 +49,12 @@
                         </div>
                     </div>
                     <div class="col-md-7 span-1 ">
-                        <h3><b>@item.Name</b></h3>
+                        <h3><b>
+    @item.Name
+    <input type="hidden" name="Id" value="@item.Id" />
+    <input type="hidden" name="Name" value=" @item.Name" />
+    <input type="hidden" name="Price" value=" @item.Price" />
+</b></h3>
                         <p class="in-para">@item.ShortDescription</p>
                         <div class="price_single">
                             
@@ -82,7 +88,7 @@
                                                 Att2 = attval2.ProductAttributeId;
                                                 @if (Att2 == Att)
                                                 {
-                                                    <input type="radio" id="@attval.Name"
+                                                    <input type="radio" id="@attval.ProductAttributes.Name" class="123"
                                                            name="@attval.ProductAttributes.Name" value="@attval2.Name">
                                                     @attval2.Name
                                                 }
@@ -99,13 +105,28 @@
                                 }
                             }
                         </p>
+                        <input type="hidden" name="txtattributes" id="txtattributes" />
+                        <script type="text/javascript">
+                            function getattributes() {
+                                let htmlElements =
+                                    document.getElementsByClassName("123");
+                                for (let i = 0; i < htmlElements.length; i++) {
+                                    if (htmlElements[i].checked) {
+                                        document.getElementById("txtattributes").value = document.getElementById("txtattributes").value + htmlElements[i].getAttribute('id') + ': ' + htmlElements[i].getAttribute('value') + '<br />';
+                                    }
+                                }
+                            }
+                        </script>
                         <div class="add-to">
                             <br />
-                            <button class="btn btn-danger my-cart-btn my-cart-b " data-id="1" data-name="@item.Name" data-summary="summary 1" data-price="@((int)item.Price)" data-quantity="1" data-image="/images/of.png" onclick="location.href='@Url.Action("AddCart", "Carts", new { Id = @item.Id, Name = @item.Name, Price = @item.Price })'">Add to Cart</button>
+                            @*<button class="btn btn-danger my-cart-btn my-cart-b " data-id="1" data-name="@item.Name" data-summary="summary 1" data-price="@((int)item.Price)" data-quantity="1" data-image="/images/of.png" onclick="getattributes();location.href='@Url.Action("AddCart", "Carts", new { Id = @item.Id, Name = @item.Name, Price = @item.Price, att= @txtattributes.value })'">Add to Cart</button>*@
+                            <button type="submit" class="btn btn-danger my-cart-btn my-cart-b " onclick="getattributes();">Add to Cart</button>
+@*                            <button class="btn btn-danger my-cart-btn my-cart-b " onclick="getattributes();">Add to Cart</button>*@
                             <button class="btn btn-danger my-cart-btn my-cart-b " onclick="history.back()">Back</button>
                         </div>
                     </div>
                     <div class="clearfix"> </div>
+                    </form>
                 </div>
             </div>
         </div>

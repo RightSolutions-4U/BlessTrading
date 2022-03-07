@@ -157,83 +157,28 @@ namespace BlessTrading.UI.Controllers
                 option.IsEssential = true;
                 Response.Cookies.Append("userid", a.Id.ToString(), option);
             }
-            /*Load load = new Load();
-            //Featured--field name MarkAsNew
-            var clientF = new HttpClient();
-            var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
-            var responseF = await clientF.GetAsync(urlF);
-            var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
-            load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
-            //New Arrivals--field name Recent
-            var clientN = new HttpClient();
-            var urlN = "https://localhost:44340/api/Products/GetNewProducts";
-            var responseN = await clientN.GetAsync(urlN);
-            var NewProduct = responseN.Content.ReadAsStringAsync().Result;
-            load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
-            //Customers
-            if (Request.Cookies["userid"] != null)
-            {
-                var clientC = new HttpClient();
-                UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Customers/LoginID?");
-                builderC.Query = "UserId=" + Request.Cookies["userid"];
-                HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
-                if (responseC.IsSuccessStatusCode)
-                {
-                    var Users = responseC.Content.ReadAsStringAsync().Result;
-                    load.Customer = JsonConvert.DeserializeObject<Customer>(Users);
-                    ViewBag.UserName = load.Customer.Username;
-                }
-                else
-                {
-                    ViewBag.message = "Invalid UserId or Password";
-                    return View("~/Views/Shared/login.cshtml");
-                }
-            }*/
-                return RedirectToAction("Index","Home");
-            /*return View("../Home/Index", load);*/
+                            //Send Email to vendor
+                var body = "";
+                body = "<table border=0  width ='50%'>";
+                body += "<tr><td align='center' colspan='2'><h1>Customer Login</h1></td></tr>";
+                body += "<tr><td align='center' colspan='2'><hr></td></tr>";
+                body += "<tr><td>You have been login successfuly to <b>BlessTrading.net</b></td><td>&nbsp;</td></tr>";
+                body += "<tr><td align='center' colspan='2'><hr></td></tr>";
+                body += "</table>";
+                Email email = new Email();
+                var tobesend = collection["Email"];
+                
+                email.Send(tobesend, "DesiClothingOnline Registration",body,"");
+             return RedirectToAction("Index","Home");
         }
         // GET: AccountController/Delete/5
-        public async Task<ActionResult> Logout()
+        public ActionResult Logout()
         {
-                /*CookieOptions option = new CookieOptions();
-                option.Expires = DateTime.Now.AddDays(50);*/
-                if (Request.Cookies["userid"] != null)
-                {
-                    Response.Cookies.Delete("userid");
-                }
-            Load load = new Load();
-            //Featured--field name MarkAsNew
-            var clientF = new HttpClient();
-            var urlF = "https://localhost:44340/api/Products/GetFeatuedProducts";
-            var responseF = await clientF.GetAsync(urlF);
-            var FeaturedProduct = responseF.Content.ReadAsStringAsync().Result;
-            load.FeaturedProduct = JsonConvert.DeserializeObject<Product[]>(FeaturedProduct);
-            //New Arrivals--field name Recent
-            var clientN = new HttpClient();
-            var urlN = "https://localhost:44340/api/Products/GetNewProducts";
-            var responseN = await clientN.GetAsync(urlN);
-            var NewProduct = responseN.Content.ReadAsStringAsync().Result;
-            load.NewProduct = JsonConvert.DeserializeObject<Product[]>(NewProduct);
-            //Customers
             if (Request.Cookies["userid"] != null)
             {
-                var clientC = new HttpClient();
-                UriBuilder builderC = new UriBuilder("https://localhost:44340/api/Customers/LoginID?");
-                builderC.Query = "UserId=" + Request.Cookies["userid"];
-                HttpResponseMessage responseC = await clientC.GetAsync(builderC.Uri);
-                if (responseC.IsSuccessStatusCode)
-                {
-                    var Users = responseC.Content.ReadAsStringAsync().Result;
-                    load.Customer = JsonConvert.DeserializeObject<Customer>(Users);
-                    ViewBag.UserName = load.Customer.Username;
-                }
-                else
-                {
-                    ViewBag.message = "Invalid UserId or Password";
-                    return View("~/Views/Shared/login.cshtml", load);
-                }
+                Response.Cookies.Delete("userid");
             }
-            return View("../Home/Index",load);
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult Delete(int id)
         {
